@@ -15,7 +15,15 @@ const validateUser = [
     .trim()
     .isEmail()
     .withMessage("Not a valid e-mail address")
-    .normalizeEmail(),
+    .normalizeEmail()
+    .custom(async (email) => {
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (existingUser) {
+          throw new Error("User already exists");
+        }
+        return true;
+      }),
+      
   body("password")
     .trim()
     .isStrongPassword({
@@ -41,25 +49,29 @@ export const usersCreateGet = (req, res) => {
   res.render("pages/sign-up", {
     title: "Create user",
     errors: [],
+    userExists: false
   });
 };
 
 // Controller to handle sign-up form submission
 export const signup_post = [validateUser, async (req, res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("pages/sign-up", {
+        title: "Sign-Up",
+        errors: errors.array(),
+        userExists: false
+      });
+    }
+      
     const { email, password } = req.body;
-    
     console.log('Signup POST body:', req.body);
 
     try {
       // Validate fields
       if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
-      }
-  
-      // Check if user already exists
-      const existingUser = await prisma.user.findUnique({ where: { email } });
-      if (existingUser) {
-        return res.status(409).json({ message: 'User already exists' });
       }
   
       // Hash password
@@ -73,8 +85,8 @@ export const signup_post = [validateUser, async (req, res) => {
         },
       });
   
-      res.status(201).json({ message: 'User created', userId: newUser.id });
-      //res.redirect('/login');
+      //res.status(201).json({ message: 'User created', userId: newUser.id });
+      res.redirect('/login');
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Server error' });
