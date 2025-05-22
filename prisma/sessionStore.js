@@ -20,30 +20,34 @@ export default class PrismaSessionStore extends session.Store {
 
   async set(sid, sessionData, callback) {
     try {
+      const expiryDate = new Date(sessionData.cookie.expires);
+  
       await this.prisma.session.upsert({
         where: { sid },
         update: {
           data: JSON.stringify(sessionData),
-          expires: sessionData.cookie.expires,
+          expiresAt: expiryDate,
         },
         create: {
           sid,
           data: JSON.stringify(sessionData),
-          expires: sessionData.cookie.expires,
+          expiresAt: expiryDate,
         },
       });
+  
       callback(null);
     } catch (err) {
       callback(err);
     }
   }
-
+  
   async destroy(sid, callback) {
     try {
-      await this.prisma.session.delete({ where: { sid } });
+      await this.prisma.session.deleteMany({ where: { sid } });
       callback(null);
     } catch (err) {
       callback(err);
     }
   }
+  
 }
