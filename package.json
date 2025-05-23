@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@preline/layout-splitter": "^3.0.0",
     "@prisma/client": "^6.8.2",
     "@quixo3/prisma-session-store": "^3.1.13",
     "@tailwindcss/cli": "^4.1.7",
