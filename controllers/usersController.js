@@ -46,6 +46,7 @@ const validateUser = [
 
 // Controller to render sign-up page
 export const usersCreateGet = (req, res) => {
+
   res.render("pages/sign-up", {
     title: "Create user",
     errors: [],
@@ -61,7 +62,8 @@ export const signup_post = [validateUser, async (req, res) => {
       return res.status(400).render("pages/sign-up", {
         title: "Sign-Up",
         errors: errors.array(),
-        userExists: false
+        userExists: false,
+        email: req.body.email,
       });
     }
       

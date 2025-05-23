@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 
-
 /* Adds pointer cursor to buttons */
 @layer base {
     button:not(:disabled),
