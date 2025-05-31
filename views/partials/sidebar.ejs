@@ -1,102 +1,236 @@
 <!-- Navigation Toggle -->
 <div class="sm:hidden py-16 text-center">
-    <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-gray-800 border border-gray-800 text-white text-sm font-medium rounded-lg shadow-2xs align-middle hover:bg-gray-950 focus:outline-hidden focus:bg-gray-900" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-sidebar-layout-splitter" aria-label="Toggle navigation" data-hs-overlay="#hs-sidebar-layout-splitter">
-      Open
-    </button>
-  </div>
-  <!-- End Navigation Toggle -->
-  
-  <!-- Sidebar -->
-  <div id="hs-sidebar-layout-splitter" class="hs-overlay [--auto-close:sm] sm:block sm:translate-x-0 sm:end-auto sm:bottom-0 w-64
-  hs-overlay-open:translate-x-0
-  -translate-x-full transition-all duration-300 transform
-  h-full
-  w-900
-  max-w-[90%]
-  hidden
-  fixed top-0 start-0 bottom-0 z-20
-  " role="dialog" tabindex="-1" aria-label="Sidebar"   data-hs-layout-splitter='{
-    "horizontalSplitterTemplate": "<div><span class=\"absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 block w-4 h-6 flex justify-center items-center bg-white border border-gray-200 text-gray-400 rounded-md cursor-grab hover:bg-gray-100\"><svg class=\"shrink-0 size-3.5\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/></svg></span></div>",
-    "horizontalSplitterClasses": "pointer-events-auto relative flex"
-  }'>
-    <div class="relative flex h-full max-h-fullpointer-events-none" data-hs-layout-splitter-horizontal-group>
-      <div class="pointer-events-auto bg-white border-e border-gray-200" data-hs-layout-splitter-item='{
-        "dynamicSize": 12.0,
-        "minSize": 13.0,
-        "preLimitSize": 25.0
-      }' style="flex: 12 1 0px;">
-        <!-- Header -->
-        <header class="p-4 flex justify-between items-center gap-x-2">
-          <a class="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80" href="/" aria-label="CookieJar">CookieJar</a>
-  
-          <div class="sm:hidden -me-2">
-            <!-- Close Button -->
-            <button type="button" class="flex justify-center items-center gap-x-3 size-6 bg-white border border-gray-200 text-sm text-gray-600 hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100" data-hs-overlay="#hs-sidebar-layout-splitter">
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-              <span class="sr-only">Close</span>
-            </button>
-            <!-- End Close Button -->
-          </div>
-        </header>
-        <!-- End Header -->
-  
-        <!-- Body -->
-        <nav class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
-          <div class="hs-accordion-group pb-0 px-2  w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
-            <ul class="space-y-1">
-              <li>
-                <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100" href="#">
-                  <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                  Dashboard
-                </a>
-              </li>
-  
-              <li class="hs-accordion" id="users-accordion">
-                <button type="button" class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100" aria-expanded="true" aria-controls="users-accordion-collapse-1">
-                  <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  Folder
-  
-                  <svg class="hs-accordion-active:block ms-auto hidden size-4 text-gray-600 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  
-                  <svg class="hs-accordion-active:hidden ms-auto block size-4 text-gray-600 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-  
-                <div id="users-accordion-collapse-1" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden" role="region" aria-labelledby="users-accordion">
-                  <ul class="hs-accordion-group pt-1 ps-7 space-y-1" data-hs-accordion-always-open>
-                    <li class="hs-accordion" id="users-accordion-sub-1">
-                      <button type="button" class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100" aria-expanded="true" aria-controls="users-accordion-sub-1-collapse-1">
-                        Sub Folder
-  
-                        <svg class="hs-accordion-active:block ms-auto hidden size-4 text-gray-600 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  
-                        <svg class="hs-accordion-active:hidden ms-auto block size-4 text-gray-600 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                      </button>
-  
-                      <div id="users-accordion-sub-1-collapse-1" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden" role="region" aria-labelledby="users-accordion-sub-1">
-                        <ul class="pt-1 ps-2 space-y-1">
-                          <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100" href="#">
-                              File
-                            </a>
-                          </li>
-                          <li>
-                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100" href="#">
-                              File
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-  
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <!-- End Body -->
-      </div>
-      <div class="overflow-hidden self-start" data-hs-layout-splitter-item="63.0" style="flex: 63 1 0px;"></div>
+  <button type="button"
+    class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-gray-800 border border-gray-800 text-white text-sm font-medium rounded-lg shadow-2xs align-middle hover:bg-gray-950 focus:outline-hidden focus:bg-gray-900"
+    aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-sidebar-layout-splitter"
+    aria-label="Toggle navigation" data-hs-overlay="#hs-sidebar-layout-splitter">
+    Open
+  </button>
+</div>
+<!-- End Navigation Toggle -->
+
+<!-- Sidebar -->
+<div id="hs-sidebar-layout-splitter" class="hs-overlay [--auto-close:sm] sm:block sm:translate-x-0 sm:end-auto sm:bottom-0 w-100
+hs-overlay-open:translate-x-12
+-translate-x-full transition-all duration-300 transform
+h-full
+max-w-[90%]
+hidden
+fixed top-0 start-0 bottom-0 z-1
+" role="dialog" tabindex="-1" aria-label="Sidebar" data-hs-layout-splitter='{
+  "horizontalSplitterTemplate": "<div><span class=\"absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 block w-4 h-6 flex justify-center items-center bg-white border border-gray-200 text-gray-400 rounded-md cursor-grab hover:bg-gray-100\"><svg class=\"shrink-0 size-3.5\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/></svg></span></div>",
+  "horizontalSplitterClasses": "pointer-events-auto relative flex"
+}'>
+  <div class="relative flex h-full max-h-fullpointer-events-none" data-hs-layout-splitter-horizontal-group>
+    <div class="pointer-events-auto bg-white border-e border-gray-200" data-hs-layout-splitter-item='{
+      "dynamicSize": 12.0,
+      "minSize": 13.0,
+      "preLimitSize": 25.0
+    }' style="flex: 12 1 0px;">
+      <!-- Header -->
+      <header class="p-4 flex justify-between items-center gap-x-2">
+        <!--<a class="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80" href="/" aria-label="CookieJar">CookieJar</a>-->
+
+        <div class="sm:hidden -me-2">
+          <!-- Close Button -->
+          <button type="button"
+            class="flex justify-center items-center gap-x-3 size-6 bg-white border border-gray-200 text-sm text-gray-600 hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100"
+            data-hs-overlay="#hs-sidebar-layout-splitter">
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+            <span class="sr-only">Close</span>
+          </button>
+          <!-- End Close Button -->
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <nav
+        class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 py-10">
+        <div class="hs-accordion-group pb-0 px-2  w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+          <ul class="space-y-1">
+            <li>
+              <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                href="#">
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Dashboard
+              </a>
+            </li>
+
+            <nav class="h-full overflow-y-auto ... py-10">
+              <div class="hs-accordion-group pb-0 px-2 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+                <ul class="space-y-1">
+
+                  <li class="hs-accordion" id="folders-accordion">
+                    <button type="button"
+                      class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                      aria-expanded="false" aria-controls="folders-accordion-collapse" id="folders-accordion-button">
+                      <!-- Folder icon -->
+                      <svg class="size-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        viewBox="0 0 24 24">
+                        <path d="M3 7h4l3 3h11v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+                      </svg>
+                      Folders
+                      <!-- Arrow icon -->
+                      <svg class="hs-accordion-active:block ms-auto hidden size-4 text-gray-600"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="m18 15-6-6-6 6" />
+                      </svg>
+                      <svg class="hs-accordion-active:hidden ms-auto block size-4 text-gray-600"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </button>
+
+                    <div id="folders-accordion-collapse"
+                      class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
+                      role="region" aria-labelledby="folders-accordion-button">
+
+                      <ul class="hs-accordion-group pt-1 ps-7 space-y-1" data-hs-accordion-always-open>
+                        <% folders.forEach(folder=> { %>
+                          <a href="/folder/<%= folder.id %>">
+                            <li class="hs-accordion" id="folder-<%= folder.id %>-accordion">
+                              <button type="button"
+                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                                aria-expanded="false" aria-controls="folder-<%= folder.id %>-collapse"
+                                id="folder-<%= folder.id %>-button">
+                                <!-- Folder icon -->
+                                <svg class="size-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                  viewBox="0 0 24 24">
+                                  <path d="M3 7h4l3 3h11v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+                                </svg>
+                                <%= folder.name %>
+
+                                  <svg class="hs-accordion-active:block ms-auto hidden size-4 text-gray-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="m18 15-6-6-6 6" />
+                                  </svg>
+                                  <svg class="hs-accordion-active:hidden ms-auto block size-4 text-gray-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="m6 9 6 6 6-6" />
+                                  </svg>
+                              </button>
+
+                              <div id="folder-<%= folder.id %>-collapse"
+                                class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
+                                role="region" aria-labelledby="folder-<%= folder.id %>-button">
+
+                                <ul class="pt-1 ps-2 space-y-1">
+
+                                  <% if (folder.subfolders && folder.subfolders.length> 0) { %>
+                                    <% folder.subfolders.forEach(subfolder=> { %>
+                                      <li>
+                                        <button type="button"
+                                          class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                                          aria-expanded="false" aria-controls="subfolder-<%= subfolder.id %>-collapse"
+                                          id="subfolder-<%= subfolder.id %>-button">
+                                          <!-- Folder icon -->
+                                          <svg class="size-4 text-gray-600" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" viewBox="0 0 24 24">
+                                            <path d="M3 7h4l3 3h11v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+                                          </svg>
+                                          <%= subfolder.name %>
+
+                                            <svg class="hs-accordion-active:block ms-auto hidden size-4 text-gray-600"
+                                              xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                              viewBox="0 0 24 24">
+                                              <path d="m18 15-6-6-6 6" />
+                                            </svg>
+                                            <svg class="hs-accordion-active:hidden ms-auto block size-4 text-gray-600"
+                                              xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                              viewBox="0 0 24 24">
+                                              <path d="m6 9 6 6 6-6" />
+                                            </svg>
+                                        </button>
+
+                                        <div id="subfolder-<%= subfolder.id %>-collapse"
+                                          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
+                                          role="region" aria-labelledby="subfolder-<%= subfolder.id %>-button">
+
+                                          <ul class="pt-1 ps-2 space-y-1">
+                                            <% if (subfolder.files && subfolder.files.length> 0) { %>
+                                              <% subfolder.files.forEach(file=> { %>
+                                                <li>
+                                                  <a href="/files/<%= file.id %>"
+                                                    class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100">
+                                                    <!-- File icon -->
+                                                    <svg class="size-4 text-gray-600" xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none" stroke="currentColor" stroke-width="2"
+                                                      stroke-linecap="round" stroke-linejoin="round"
+                                                      viewBox="0 0 24 24">
+                                                      <path
+                                                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                      <polyline points="14 2 14 8 20 8" />
+                                                    </svg>
+                                                    <%= file.name %>
+                                                  </a>
+                                                </li>
+                                                <% }) %>
+                                                  <% } %>
+                                          </ul>
+
+                                        </div>
+                                      </li>
+                                      <% }) %>
+                                        <% } %>
+
+                                          <% if (folder.files && folder.files.length> 0) { %>
+                                            <% folder.files.forEach(file=> { %>
+                                              <li>
+                                                <a href="/files/<%= file.id %>"
+                                                  class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100">
+                                                  <!-- File icon -->
+                                                  <svg class="size-4 text-gray-600" xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                    <path
+                                                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                    <polyline points="14 2 14 8 20 8" />
+                                                  </svg>
+                                                  <%= file.name %>
+                                                </a>
+                                              </li>
+                                              <% }) %>
+                                                <% } %>
+
+                                </ul>
+
+                              </div>
+                            </li>
+                            <% }) %>
+                          </a>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+
+         
+
+          </ul>
+        </div>
+      </nav>
+      <!-- End Body -->
     </div>
+    <div class="overflow-hidden self-start" data-hs-layout-splitter-item="63.0" style="flex: 63 1 0px;"></div>
   </div>
-  <!-- End Sidebar -->
+</div>
+<!-- End Sidebar -->

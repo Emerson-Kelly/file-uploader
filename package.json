@@ -18,6 +18,7 @@
     "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
     "@tailwindcss/forms": "^0.5.10",
     "@types/express-session": "^1.18.1",
     "@types/node": "^22.15.18",
@@ -32,6 +33,7 @@
     "dev": "concurrently \"npm:dev:server\" \"npm:dev:css\" \"npm:prisma-studio\"",
     "dev:server": "nodemon app.js",
     "dev:css": "npx @tailwindcss/cli -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch",
-    "prisma-studio": "npx prisma studio"
+    "prisma-studio": "npx prisma studio",
+    "seed:files": "node scripts/seedFiles.js"
   }
 }

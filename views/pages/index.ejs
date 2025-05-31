@@ -11,13 +11,16 @@
 
   <body>
     <%- include('../partials/navbar') %>
+    <% if (user) { %>
+        
     <%- include('../partials/sidebar') %>
     <div class="min-h-screen bg-gradient-to-b from-blue-50 via-transparent light:from-blue-50 light:via-transparent">
-
+        <%- include('../partials/file-path') %>
+        <%- include('../partials/files') %>
     </div>
    
 
-
+    <% } %>
 
     <script src="/assets/vendor/preline/dist/preline.js"></script>
   </body>

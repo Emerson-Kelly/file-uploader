@@ -25,13 +25,17 @@ model User {
 }
 
 model Folder {
-  id        String   @id @default(cuid())
-  name      String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  files     File[]
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  name       String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  files      File[]
+  parentId   String?
+  parent     Folder?  @relation("FolderToSubfolders", fields: [parentId], references: [id])
+  subfolders Folder[] @relation("FolderToSubfolders")
+  createdAt  DateTime @default(now())
 }
+
 
 model File {
   id        String   @id @default(cuid())
