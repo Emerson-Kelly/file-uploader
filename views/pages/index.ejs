@@ -12,11 +12,69 @@
   <body>
     <%- include('../partials/navbar') %>
     <% if (user) { %>
-        
-    <%- include('../partials/sidebar') %>
     <div class="min-h-screen bg-gradient-to-b from-blue-50 via-transparent light:from-blue-50 light:via-transparent">
-        <%- include('../partials/file-path') %>
-        <%- include('../partials/files') %>
+        <main id="main-content">
+<!-- Folder Table Display -->
+<div class="overflow-x-auto pt-13">
+    <table class="min-w-full table-auto text-left border border-gray-200 rounded-lg">
+      <thead class="bg-gray-100 text-gray-700 uppercase text-sm">
+        <tr>
+          <th class="px-4 py-3">Folder</th>
+          <th class="px-4 py-3">Subfolder</th>
+          <th class="px-4 py-3">File</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
+        <% allFolders.forEach(folder => { %>
+          <% 
+            const hasSubfolders = folder.subfolders && folder.subfolders.length > 0; 
+            const rowCount = hasSubfolders 
+              ? folder.subfolders.reduce((acc, sub) => acc + (sub.files?.length || 1), 0)
+              : 1;
+          %>
+          <% if (!hasSubfolders) { %>
+            <tr>
+              <td class="px-4 py-3"><a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a></td>
+              <td class="px-4 py-3 text-gray-500 italic">—</td>
+              <td class="px-4 py-3 text-gray-500 italic">—</td>
+            </tr>
+          <% } else { %>
+            <% folder.subfolders.forEach((subfolder, subIndex) => { %>
+              <% if (!subfolder.files || subfolder.files.length === 0) { %>
+                <tr>
+                  <% if (subIndex === 0) { %>
+                    <td class="px-4 py-3" rowspan="<%= rowCount %>">
+                      <a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a>
+                    </td>
+                  <% } %>
+                  <td class="px-4 py-3"><%= subfolder.name %></td>
+                  <td class="px-4 py-3 text-gray-500 italic">—</td>
+                </tr>
+              <% } else { %>
+                <% subfolder.files.forEach((file, fileIndex) => { %>
+                  <tr>
+                    <% if (subIndex === 0 && fileIndex === 0) { %>
+                      <td class="px-4 py-3" rowspan="<%= rowCount %>">
+                        <a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a>
+                      </td>
+                    <% } %>
+                    <% if (fileIndex === 0) { %>
+                      <td class="px-4 py-3" rowspan="<%= subfolder.files.length %>"><%= subfolder.name %></td>
+                    <% } %>
+                    <td class="px-4 py-3">
+                      <a href="/files/<%= file.id %>" class="text-blue-600 hover:underline"><%= file.name %></a>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } %>
+            <% }); %>
+          <% } %>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  
+        </main>
     </div>
    
 

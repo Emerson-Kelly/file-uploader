@@ -1,37 +1,23 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
+import { getFolderDetails, getTopLevelFolders } from "../lib/dataService.js";
 
 export const folderGet = async (req, res) => {
   const folderId = req.params.id;
 
   try {
-    const currentFolder = await prisma.folder.findUnique({
-      where: { id: folderId },
-      include: {
-        files: true,
-        parent: true,
-      },
-    });
+    const { currentFolder, subfolders } = await getFolderDetails(folderId);
 
     if (!currentFolder) {
       return res.status(404).send("Folder not found");
     }
 
-    const subfolders = await prisma.folder.findMany({
-      where: { parentId: folderId },
-      orderBy: { createdAt: "desc" },
-      include: {
-        files: true,
-        subfolders: true,
-      },
-    });
+    const allFolders = await getTopLevelFolders();
 
-    res.render("pages/index", {
+    res.render("pages/files", {
       title: currentFolder.name,
       currentFolder,
       folders: subfolders,
       files: currentFolder.files,
+      allFolders,
     });
   } catch (error) {
     console.error("Error loading folder contents:", error);

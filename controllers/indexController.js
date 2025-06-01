@@ -1,38 +1,15 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { getTopLevelFolders } from "../lib/dataService.js";
 
 export const indexGet = async (req, res) => {
   try {
-
-    const folders = await prisma.folder.findMany({
-        orderBy: { createdAt: "desc" },
-        include: {
-          subfolders: {
-            orderBy: { createdAt: "desc" },
-            include: {
-              files: true,
-            },
-          },
-          files: true,
-        },
-      });
-      
-
-    const files = await prisma.file.findMany({
-      orderBy: { createdAt: "desc" },
-      include: { folder: true },
-    });
+    const allFolders = await getTopLevelFolders();
 
     res.render("pages/index", {
       title: "Home",
-      files,
-      folders,
-      
+      allFolders, // pass it here
     });
   } catch (err) {
-    console.error("Error loading files:", err);
+    console.error("Error loading folders:", err);
     res.status(500).send("Internal Server Error");
   }
 };
-
-  
