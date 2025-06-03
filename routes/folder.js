@@ -1,10 +1,10 @@
 import express from 'express';
-import { folderGet } from '../controllers/folderController.js';
-
+import { createFolderPost, editFolderPost } from '../controllers/foldersController.js';
 
 const router = express.Router();
 
-router.get("/folder/:id", folderGet);
+router.post('/folders', createFolderPost);
 
+router.post('/folders/:id/rename', editFolderPost);
 
-  export { router as folderRouter };
+export { router as folderRouter };

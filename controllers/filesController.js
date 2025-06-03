@@ -1,6 +1,6 @@
 import { getFolderDetails, getTopLevelFolders } from "../lib/dataService.js";
 
-export const folderGet = async (req, res) => {
+export const filesGet = async (req, res) => {
   const folderId = req.params.id;
 
   try {
@@ -10,14 +10,11 @@ export const folderGet = async (req, res) => {
       return res.status(404).send("Folder not found");
     }
 
-    const allFolders = await getTopLevelFolders();
-
     res.render("pages/files", {
       title: currentFolder.name,
       currentFolder,
       folders: subfolders,
       files: currentFolder.files,
-      allFolders,
     });
   } catch (error) {
     console.error("Error loading folder contents:", error);

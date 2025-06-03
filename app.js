@@ -10,6 +10,7 @@ import { indexRouter } from "./routes/index.js";
 import { usersRouter } from "./routes/signUp.js";
 import { loginRouter } from "./routes/login.js";
 import { signup_post } from "./controllers/usersController.js";
+import { filesRouter } from "./routes/files.js";
 import { folderRouter } from "./routes/folder.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 app.use("/", usersRouter);
 app.use("/", loginRouter);
+app.use("/", filesRouter);
 app.use("/", folderRouter);
 
 const PORT = process.env.PORT || 3000;
