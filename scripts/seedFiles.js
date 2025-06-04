@@ -11,10 +11,16 @@ const TARGET_EMAIL = "emerson4945@gmail.com";
 const EXTENSIONS = ["pdf", "png", "docx", "txt", "jpg"];
 
 async function seedFakeFiles() {
-  // Get the user
+  // Get the user with folders and subfolders
   const user = await prisma.user.findUnique({
     where: { email: TARGET_EMAIL },
-    include: { folders: true },
+    include: {
+      folders: {
+        include: {
+          subfolders: true,
+        },
+      },
+    },
   });
 
   if (!user) {
@@ -32,7 +38,6 @@ async function seedFakeFiles() {
     fs.mkdirSync(UPLOAD_DIR, { recursive: true });
   }
 
-  // Create fake files in random folders
   for (let i = 0; i < NUM_FILES; i++) {
     const name = faker.system.fileName().replace(/\.[^/.]+$/, "");
     const ext = faker.helpers.arrayElement(EXTENSIONS);
@@ -41,12 +46,23 @@ async function seedFakeFiles() {
 
     // Create dummy file content
     fs.writeFileSync(fakePath, faker.lorem.paragraphs(2));
-
     const size = fs.statSync(fakePath).size;
+
     const relativePath = `uploads/${fileName}`;
     const fakeUrl = `/uploads/${fileName}`;
 
+    // Pick a random top-level folder
     const randomFolder = faker.helpers.arrayElement(user.folders);
+
+    // Pick either the parent folder or a subfolder
+    let targetFolderId = randomFolder.id;
+    if (randomFolder.subfolders.length > 0 && Math.random() < 0.5) {
+      const sub = faker.helpers.arrayElement(randomFolder.subfolders);
+      targetFolderId = sub.id;
+      console.log(`📂 Subfile -> ${sub.name}`);
+    } else {
+      console.log(`📁 Top-level file -> ${randomFolder.name}`);
+    }
 
     await prisma.file.create({
       data: {
@@ -55,11 +71,11 @@ async function seedFakeFiles() {
         path: relativePath,
         url: fakeUrl,
         userId: user.id,
-        folderId: randomFolder.id,
+        folderId: targetFolderId,
       },
     });
 
-    console.log(`✅ Created ${fileName} in folder "${randomFolder.name}"`);
+    console.log(`✅ Created ${fileName} in folder ID ${targetFolderId}`);
   }
 
   await prisma.$disconnect();

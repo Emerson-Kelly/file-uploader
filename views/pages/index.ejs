@@ -16,7 +16,7 @@
         <main id="main-content">
 <!-- Folder Table Display -->
 <div class="overflow-x-auto pt-13 max-w-[81rem] w-full m-auto">
-    <%- include('../partials/subnav') %>
+    <%- include('../partials/subnav', { parentId: parentId }) %>
     <table class="min-w-full table-auto text-left border border-gray-200 rounded-lg">
       <thead class="bg-gray-50 text-gray-700 uppercase text-sm border border-gray-200 border-b-2">
         <tr>
@@ -29,70 +29,100 @@
       <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
         <% allFolders.forEach(folder => { %>
           <% 
-            const hasSubfolders = folder.subfolders && folder.subfolders.length > 0; 
-            const rowCount = hasSubfolders 
-              ? folder.subfolders.reduce((acc, sub) => acc + (sub.files?.length || 1), 0)
-              : 1;
+            // Calculate total rows for folder: sum of files in all subfolders or 1 if none
+            let folderRowCount = 0;
+            if (folder.subfolders && folder.subfolders.length > 0) {
+              folder.subfolders.forEach(sub => {
+                folderRowCount += (sub.files && sub.files.length > 0) ? sub.files.length : 1;
+              });
+            } else {
+              folderRowCount = 1;
+            }
           %>
-          <% if (!hasSubfolders) { %>
+      
+          <% if (!folder.subfolders || folder.subfolders.length === 0) { %>
+            <!-- Folder with no subfolders -->
             <tr>
-              <td class="px-4 py-3"><a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a></td>
+              <td class="px-4 py-3">
+                <a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a>
+              </td>
               <td class="px-4 py-3 text-gray-500 italic">—</td>
               <td class="px-4 py-3 text-gray-500 italic">—</td>
               <td class="px-4 py-3 text-gray-500 italic">
-              <div class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex">
-                <button id="hs-dropdown-example" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                <div class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex">
+                  <button id="hs-dropdown-example" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis size-4"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                  <svg class="hs-dropdown-open:rotate-180 size-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m6 9 6 6 6-6"></path>
-                  </svg>
-                </button>
-              
-                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-60 bg-white shadow-md rounded-lg p-2 contents" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-example">
-                    <form method="POST" action="/folders/<%= folder.id %>/rename">
-                        <input type="text" name="name" value="<%= folder.name %>" required>
-                        <button type="submit" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100">Rename</button>
-                      </form>
-                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100" href="#">
-                   Delete
-                  </a>
+                  </button>
+                  <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-60 bg-white shadow-md rounded-lg p-2 contents" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-example">
+                    <form method="POST" action="/folders/<%= folder.id %>/rename" class="mb-2">
+                      <input type="text" name="name" value="<%= folder.name %>" required class="border rounded px-2 py-1 w-full" />
+                      <button type="submit" class="mt-1 w-full bg-blue-600 text-white py-1 rounded hover:bg-blue-700">Rename</button>
+                    </form>
+                    <a href="#" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100">
+                      Delete
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </td>
+              </td>
+              
             </tr>
           <% } else { %>
+            <% 
+              // For folders with subfolders
+              let firstFolderRowRendered = false;
+            %>
             <% folder.subfolders.forEach((subfolder, subIndex) => { %>
+              <% 
+                const subfolderRowCount = (subfolder.files && subfolder.files.length > 0) ? subfolder.files.length : 1;
+                let firstSubfolderRowRendered = false;
+              %>
+      
               <% if (!subfolder.files || subfolder.files.length === 0) { %>
+                <!-- Subfolder with no files -->
                 <tr>
-                  <% if (subIndex === 0) { %>
-                    <td class="px-4 py-3" rowspan="<%= rowCount %>">
+                  <% if (!firstFolderRowRendered) { %>
+                    <td class="px-4 py-3" rowspan="<%= folderRowCount %>">
                       <a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a>
                     </td>
+                    <% firstFolderRowRendered = true; %>
                   <% } %>
                   <td class="px-4 py-3"><%= subfolder.name %></td>
                   <td class="px-4 py-3 text-gray-500 italic">—</td>
+                  <td class="px-4 py-3 text-gray-500 italic"> 
+                    <!-- Subfolder actions -->
+                  </td>
                 </tr>
               <% } else { %>
+                <!-- Subfolder with files -->
                 <% subfolder.files.forEach((file, fileIndex) => { %>
                   <tr>
-                    <% if (subIndex === 0 && fileIndex === 0) { %>
-                      <td class="px-4 py-3" rowspan="<%= rowCount %>">
+                    <% if (!firstFolderRowRendered && fileIndex === 0) { %>
+                      <td class="px-4 py-3" rowspan="<%= folderRowCount %>">
                         <a href="/folder/<%= folder.id %>" class="text-blue-600 hover:underline"><%= folder.name %></a>
                       </td>
+                      <% firstFolderRowRendered = true; %>
                     <% } %>
-                    <% if (fileIndex === 0) { %>
-                      <td class="px-4 py-3" rowspan="<%= subfolder.files.length %>"><%= subfolder.name %></td>
+      
+                    <% if (!firstSubfolderRowRendered && fileIndex === 0) { %>
+                      <td class="px-4 py-3" rowspan="<%= subfolderRowCount %>"><%= subfolder.name %></td>
+                      <% firstSubfolderRowRendered = true; %>
                     <% } %>
+      
                     <td class="px-4 py-3">
                       <a href="/files/<%= file.id %>" class="text-blue-600 hover:underline"><%= file.name %></a>
                     </td>
+      
+                    <td class="px-4 py-3 text-gray-500 italic"> 
+                      <!-- File actions -->
+                    </td>
                   </tr>
-                <% }); %>
+                <% }) %>
               <% } %>
-            <% }); %>
+            <% }) %>
           <% } %>
-        <% }); %>
+        <% }) %>
       </tbody>
+      
     </table>
   </div>
   

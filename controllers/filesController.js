@@ -10,11 +10,18 @@ export const filesGet = async (req, res) => {
       return res.status(404).send("Folder not found");
     }
 
+    /*
+    // Ensure folder id and subfolder id match
+    console.log(currentFolder.id);
+    console.log(subfolders);
+    */
+
     res.render("pages/files", {
       title: currentFolder.name,
       currentFolder,
-      folders: subfolders,
+      folder: subfolders,
       files: currentFolder.files,
+      parentId: folderId.id,
     });
   } catch (error) {
     console.error("Error loading folder contents:", error);

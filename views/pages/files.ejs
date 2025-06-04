@@ -1,94 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Files</title>
-  <link href="/stylesheets/output.css" rel="stylesheet" />
-</head>
-<body>
-  <%- include('../partials/navbar') %>
-  <!-- Files View -->
-<div class="-m-1.5 overflow-auto">
-  <div class="p-1.5 min-w-full inline-block align-middle">
-    <div class="overflow-hidden">
-      <div class="table border-collapse table-auto divide-y divide-gray-200 m-auto mt-12">
-        <div class="table-header-group">
-          <h1 class="text-2xl font-bold mb-4">
-            <%= title %>
-          </h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><%= title || "Files" %></title>
+    <link href="/stylesheets/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
 
-          <% if (typeof folder !=='undefined' && folder) { %>
-            <h2 class="text-xl font-semibold mb-2">Subfolders in <%= folder.name %>
-            </h2>
-            <ul>
-              <% folder.subfolders.forEach(sub=> { %>
-                <li><a href="/folders/<%= sub.id %>" class="underline hover:text-blue-600">
-                    <%= sub.name %>
-                  </a></li>
-                <% }) %>
-            </ul>
+    <div class="-m-1.5 overflow-auto">
+      <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="overflow-hidden mt-12">
+          <%- include('../partials/subnav', { parentId }) %>
 
-            <h2 class="text-xl font-semibold mt-4 mb-2">Files in <%= folder.name %>
-            </h2>
-            <% if (folder.files && folder.files.length> 0) { %>
-              <ul>
-                <% folder.files.forEach(file=> { %>
-                  <li>
-                    <%= file.name %>
-                  </li>
+          <% if (folder || folder.files) { %>
+            <h1 class="text-2xl font-bold mb-6">📁 <%= folder.name %></h1>
+
+            <table class="min-w-full divide-y divide-gray-200 border">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Size</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <!-- Subfolders -->
+                <% if (folder && folder.length > 0) { %>
+                  <% folder.forEach(sub => { %>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="/folders/<%= sub.id %>" class="text-blue-600 hover:underline">
+                          📁 <%= sub.name %>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Folder</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">—</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <%= new Date(sub.createdAt).toLocaleDateString() %>
+                      </td>
+                    </tr>
                   <% }) %>
-              </ul>
-              <% } else { %>
-                <p>No files in this folder.</p>
                 <% } %>
 
-                  <% } else if (typeof folders !=='undefined' && folders) { %>
-                    <div class="tabsle-row">
-                      <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name
-                      </div>
-                      <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Size
-                      </div>
-                      <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Created
-                      </div>
-                      <div class="table-cell px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action
-                      </div>
-                    </div>
-        </div>
+                <!-- Files -->
+                <% if (files && files.length > 0) { %>
+                  <% files.forEach(file=> { %>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="/files/<%= file.id %>" class="text-gray-800 hover:underline">
+                          📄 <%= file.name %>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">File</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <%= (file.size / 1024).toFixed(1) %> KB
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <%= new Date(file.createdAt).toLocaleDateString() %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                <% } %>
+              </tbody>
+            </table>
 
-        <div class="table-row-group divide-y divide-gray-200 bg-white">
-          <% if (files && files.length> 0) { %>
-            <% files.forEach(file=> { %>
-              <div class="table-row">
-                <div class="table-cell px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                  <a href="/files/<%= file.id %>">
-                    <%= file.name %>
-                  </a>
-                </div>
-                <div class="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                  (<%= (file.size / 1024).toFixed(1) %> KB)
-                </div>
-                <div class="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                  <%= new Date(file.createdAt).toLocaleDateString() %>
-                </div>
-                <div class="table-cell px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                  <button type="button"
-                    class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-hidden focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
-                    Delete
-                  </button>
-                </div>
-              </div>
-              <% }) %>
-                <% } else { %>
-                  <p class="px-6 py-4 text-gray-500">No files available.</p>
-                  <% } %>
-        </div>
-        <% } else { %>
-          <p class="text-gray-500">No data available.</p>
+          <% } else if (folder) { %>
+            <h1 class="text-2xl font-bold mb-4">📁 All Folders</h1>
+            <!-- fallback view if not inside a folder -->
+            <% folder.forEach(f => { %>
+              <p><a href="/folders/<%= f.id %>" class="text-blue-600 hover:underline">📁 <%= f.name %></a></p>
+            <% }) %>
+          <% } else { %>
+            <p class="text-gray-500">No data to display.</p>
           <% } %>
+
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</body>
+  </body>
 </html>
