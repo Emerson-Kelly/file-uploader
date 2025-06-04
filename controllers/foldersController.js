@@ -48,7 +48,7 @@ export const editFolderPost = async (req, res) => {
 };
 
 export const folderGet = async (req, res) => {
-  const folderId = parseInt(req.params.id); //CHECK THIS
+  const folderId = parseInt(req.params.id);
 
   try {
     const { currentFolder, subfolders } = await getFolderDetails(folderId);
@@ -68,4 +68,6 @@ export const folderGet = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+
 
