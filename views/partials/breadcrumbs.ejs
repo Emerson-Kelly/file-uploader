@@ -1,0 +1,8 @@
+<% if (breadcrumbs && breadcrumbs.length > 0) { %>
+  <nav class="text-sm text-gray-600 mb-4">
+    <a href="/" class="text-blue-600 hover:underline">Home</a>
+    <% breadcrumbs.forEach((crumb, index) => { %>
+      / <a href="/folder/<%= crumb.id %>" class="text-blue-600 hover:underline"><%= crumb.name %></a>
+    <% }) %>
+  </nav>
+<% } %>

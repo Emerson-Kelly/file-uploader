@@ -1,4 +1,4 @@
-import { insertFolder, editFolderName } from "../lib/dataService.js";
+import { insertFolder, editFolderName, getBreadcrumbs } from "../lib/dataService.js";
 
 export const createFolderPost = async (req, res) => {
   try {
@@ -53,6 +53,8 @@ export const folderGet = async (req, res) => {
   try {
     const { currentFolder, subfolders } = await getFolderDetails(folderId);
 
+    console.log(breadcrumbs);
+
     if (!currentFolder) {
       return res.status(404).send("Folder not found");
     }
@@ -68,6 +70,3 @@ export const folderGet = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
-
-

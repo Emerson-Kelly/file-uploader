@@ -1,10 +1,11 @@
-import { getFolderDetails, getTopLevelFolders } from "../lib/dataService.js";
+import { getFolderDetails, getTopLevelFolders, getBreadcrumbs } from "../lib/dataService.js";
 
 export const filesGet = async (req, res) => {
   const folderId = req.params.id;
 
   try {
     const { currentFolder, subfolders } = await getFolderDetails(folderId);
+    const breadcrumbs = await getBreadcrumbs(folderId);
 
     if (!currentFolder) {
       return res.status(404).send("Folder not found");
@@ -22,6 +23,7 @@ export const filesGet = async (req, res) => {
       folder: subfolders,
       files: currentFolder.files,
       parentId: folderId.id,
+      breadcrumbs,
     });
   } catch (error) {
     console.error("Error loading folder contents:", error);
