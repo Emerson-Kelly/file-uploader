@@ -22,7 +22,7 @@ export const filesGet = async (req, res) => {
       currentFolder,
       folder: subfolders,
       files: currentFolder.files,
-      parentId: folderId.id,
+      parentId: folderId,
       breadcrumbs,
     });
   } catch (error) {
