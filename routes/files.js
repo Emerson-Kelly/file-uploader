@@ -1,10 +1,10 @@
 import express from 'express';
-import { filesGet } from '../controllers/filesController.js';
-
+import { filesGet, filesPost, fileUploadMiddleware } from '../controllers/filesController.js';
 
 const router = express.Router();
 
-router.get("/folder/:id", filesGet);
+router.post("/uploads", fileUploadMiddleware, filesPost);
 
+router.get("/folder/:id", filesGet);
 
   export { router as filesRouter };
