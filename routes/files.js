@@ -3,8 +3,8 @@ import { filesGet, filesPost, fileUploadMiddleware } from '../controllers/filesC
 
 const router = express.Router();
 
-router.post("/uploads", fileUploadMiddleware, filesPost);
-
 router.get("/folder/:id", filesGet);
+
+router.post("/uploads", fileUploadMiddleware, filesPost);
 
   export { router as filesRouter };
