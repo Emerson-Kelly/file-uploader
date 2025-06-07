@@ -136,12 +136,7 @@
               <% if (files && files.length> 0) { %> <% files.forEach(file=> { %>
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <a
-                    href="/files/<%= file.id %>"
-                    class="text-gray-800 hover:underline"
-                  >
                     📄 <%= file.name %>
-                  </a>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   <% if (file.size < 1024 * 1024) { %> <%= (file.size /

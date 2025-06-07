@@ -154,11 +154,7 @@
                 </td>
                 <% firstSubfolderRowRendered = true; %> <% } %>
                 <td class="px-4 py-3">
-                  <a
-                    href="/files/<%= file.id %>"
-                    class="text-blue-600 hover:underline"
-                    ><%= file.name %></a
-                  >
+                    <%= file.name %>
                 </td>
                 <td class="px-4 py-3 text-gray-500 italic">...</td>
                 <!-- Replace with file.created_at if available -->
@@ -170,11 +166,7 @@
               topLevelFiles.forEach(file => { %>
               <tr>
                 <td class="px-4 py-3">
-                  <a
-                    href="/files/<%= file.id %>"
-                    class="text-blue-600 hover:underline"
-                    ><%= file.name %></a
-                  >
+                    <%= file.name %>
                 </td>
                 <td class="px-4 py-3 text-gray-500 italic">
                   <% if (file.size < 1024 * 1024) { %> <%= (file.size /
