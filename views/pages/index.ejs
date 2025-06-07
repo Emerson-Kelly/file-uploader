@@ -177,11 +177,9 @@
                   >
                 </td>
                 <td class="px-4 py-3 text-gray-500 italic">
-                    <% if (file.size < 1024 * 1024) { %>
-                        <%= (file.size / 1024).toFixed(1) %> KB
-                      <% } else { %>
-                        <%= (file.size / (1024 * 1024)).toFixed(1) %> MB
-                      <% } %>                      
+                  <% if (file.size < 1024 * 1024) { %> <%= (file.size /
+                  1024).toFixed(1) %> KB <% } else { %> <%= (file.size / (1024 *
+                  1024)).toFixed(1) %> MB <% } %>
                 </td>
                 <!-- Replace with file.size -->
                 <td class="px-4 py-3 text-gray-500 italic">
@@ -224,12 +222,25 @@
                       aria-orientation="vertical"
                       aria-labelledby="hs-dropdown-example"
                     >
-                      <a
-                        href="#"
-                        class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                      <form
+                        method="POST"
+                        action="/folder/<%= file.id %>/delete"
+                        class="mb-2"
                       >
-                        Delete
-                      </a>
+                        <input
+                          type="hidden"
+                          name="name"
+                          value="<%= file.id %>"
+                          required
+                          class="border rounded px-2 py-1 w-full"
+                        />
+                        <button
+                          type="submit"
+                          class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                        >
+                          Delete
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </td>
@@ -245,25 +256,26 @@
 
     <script src="/assets/vendor/preline/dist/preline.js"></script>
     <script>
-        Dropzone.autoDiscover = false;
-    
-    const myDropzone = new Dropzone("#my-dropzone", {
-      paramName: "uploadedFile",
-      maxFilesize: 100, // MB
-      acceptedFiles: ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
-      init: function () {
-        this.on("success", function (file, response) {
-          if (response.redirect) {
-            window.location.href = response.redirect;
-          }
-        });
-    
-        this.on("error", function (file, errorMessage) {
-          console.error("Upload error:", errorMessage);
-          alert("Upload failed.");
-        });
-      },
-    });
+      Dropzone.autoDiscover = false;
+
+      const myDropzone = new Dropzone("#my-dropzone", {
+        paramName: "uploadedFile",
+        maxFilesize: 100, // MB
+        acceptedFiles:
+          ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
+        init: function () {
+          this.on("success", function (file, response) {
+            if (response.redirect) {
+              window.location.href = response.redirect;
+            }
+          });
+
+          this.on("error", function (file, errorMessage) {
+            console.error("Upload error:", errorMessage);
+            alert("Upload failed.");
+          });
+        },
+      });
     </script>
   </body>
 </html>

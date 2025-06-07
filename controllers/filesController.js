@@ -3,6 +3,7 @@ import {
   getTopLevelFolders,
   getBreadcrumbs,
   insertFile,
+  removeFileFromDb,
 } from "../lib/dataService.js";
 import multer from "multer";
 
@@ -72,5 +73,22 @@ export const filesPost = async (req, res) => {
   } catch (err) {
     console.error("Error handling uploaded file:", err);
     res.status(500).send("Upload failed");
+  }
+};
+
+export const deleteFile = async (req, res) => {
+  const fileId = req.params.id;
+  const parentId = req.body.parentId === "null" ? null : req.body.parentId;
+
+  try {
+    await removeFileFromDb(fileId);
+
+    const redirectUrl =
+      parentId && parentId !== "null" ? `/folder/${parentId}` : `/`;
+
+    return res.redirect(redirectUrl);
+  } catch (err) {
+    console.error("Error handling file removal:", err);
+    res.status(500).send("File removal failed");
   }
 };

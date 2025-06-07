@@ -1,5 +1,5 @@
 import express from 'express';
-import { filesGet, filesPost, fileUploadMiddleware } from '../controllers/filesController.js';
+import { deleteFile, filesGet, filesPost, fileUploadMiddleware } from '../controllers/filesController.js';
 
 const router = express.Router();
 
@@ -7,4 +7,6 @@ router.get("/folder/:id", filesGet);
 
 router.post("/uploads", fileUploadMiddleware, filesPost);
 
-  export { router as filesRouter };
+router.post("/folder/:id/delete", deleteFile);
+
+export { router as filesRouter };
