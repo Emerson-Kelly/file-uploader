@@ -177,7 +177,11 @@
                   >
                 </td>
                 <td class="px-4 py-3 text-gray-500 italic">
-                  <%= (file.size / 1024).toFixed(1) %> KB
+                    <% if (file.size < 1024 * 1024) { %>
+                        <%= (file.size / 1024).toFixed(1) %> KB
+                      <% } else { %>
+                        <%= (file.size / (1024 * 1024)).toFixed(1) %> MB
+                      <% } %>                      
                 </td>
                 <!-- Replace with file.size -->
                 <td class="px-4 py-3 text-gray-500 italic">

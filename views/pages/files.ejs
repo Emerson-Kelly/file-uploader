@@ -64,7 +64,11 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">File</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                      <%= (file.size / 1024).toFixed(1) %> KB
+                                      <% if (file.size < 1024 * 1024) { %>
+                                        <%= (file.size / 1024).toFixed(1) %> KB
+                                      <% } else { %>
+                                        <%= (file.size / (1024 * 1024)).toFixed(1) %> MB
+                                      <% } %>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                       <%= new Date(file.createdAt).toLocaleDateString() %>

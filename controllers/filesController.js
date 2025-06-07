@@ -43,7 +43,7 @@ export const fileUploadMiddleware = uploads.single("uploadedFile");
 
 export const filesPost = async (req, res) => {
   const file = req.file;
-  const folderId = req.body.parentId === 'null' ? null : req.body.parentId;
+  const folderId = req.body.parentId === "null" ? null : req.body.parentId;
   const userId = req.user.id;
 
   if (!file) {
@@ -66,9 +66,9 @@ export const filesPost = async (req, res) => {
       userId,
     });
 
-    const redirectUrl = folderId && folderId !== 'null' ? `/folder/${folderId}` : `/`;
+    const redirectUrl =
+      folderId && folderId !== "null" ? `/folder/${folderId}` : `/`;
     return res.json({ success: true, redirect: redirectUrl });
-
   } catch (err) {
     console.error("Error handling uploaded file:", err);
     res.status(500).send("Upload failed");
