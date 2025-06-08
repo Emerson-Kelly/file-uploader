@@ -153,9 +153,7 @@
                   <%= subfolder.name %>
                 </td>
                 <% firstSubfolderRowRendered = true; %> <% } %>
-                <td class="px-4 py-3">
-                    <%= file.name %>
-                </td>
+                <td class="px-4 py-3"><%= file.name %></td>
                 <td class="px-4 py-3 text-gray-500 italic">...</td>
                 <!-- Replace with file.created_at if available -->
               </tr>
@@ -165,9 +163,7 @@
               <% if (topLevelFiles && topLevelFiles.length > 0) { %> <%
               topLevelFiles.forEach(file => { %>
               <tr>
-                <td class="px-4 py-3">
-                    <%= file.name %>
-                </td>
+                <td class="px-4 py-3"><%= file.name %></td>
                 <td class="px-4 py-3 text-gray-500 italic">
                   <% if (file.size < 1024 * 1024) { %> <%= (file.size /
                   1024).toFixed(1) %> KB <% } else { %> <%= (file.size / (1024 *
@@ -233,6 +229,12 @@
                           Delete
                         </button>
                       </form>
+                      <a
+                      href="/download/<%= file.url.replace('/uploads/', '') %>"
+                      class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                    >
+                      Download
+                    </a>
                     </div>
                   </div>
                 </td>

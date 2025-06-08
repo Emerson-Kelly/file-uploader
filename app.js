@@ -13,8 +13,8 @@ import { signup_post } from "./controllers/usersController.js";
 import { filesRouter } from "./routes/files.js";
 import { folderRouter } from "./routes/folder.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const __filename = fileURLToPath(import.meta.url);
+export const __dirname = path.dirname(__filename);
 
 const app = express();
 //const PgSession = pgSession(session);

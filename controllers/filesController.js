@@ -4,8 +4,12 @@ import {
   getBreadcrumbs,
   insertFile,
   removeFileFromDb,
+  getFileByUrl,
 } from "../lib/dataService.js";
 import multer from "multer";
+import path from "node:path";
+import { fileURLToPath } from "url";
+import fs from "node:fs";
 
 const uploads = multer({ dest: "uploads/" });
 
@@ -90,5 +94,36 @@ export const deleteFile = async (req, res) => {
   } catch (err) {
     console.error("Error handling file removal:", err);
     res.status(500).send("File removal failed");
+  }
+};
+
+export const downloadFile = async (req, res) => {
+  const fileUrl = req.params.url;
+  const filePath = path.join("uploads", fileUrl);
+
+  try {
+    const file = await getFileByUrl(`/uploads/${fileUrl}`);
+
+    if (!file) {
+      return res.status(404).send("File not found");
+    }
+
+    if (!fs.existsSync(filePath)) {
+      console.error("File does not exist:", filePath);
+      return res.status(404).send("File not found");
+    }
+
+    // Set content type
+    res.setHeader("Content-Type", "application/octet-stream");
+
+    res.download(filePath, file.name, (err) => {
+      if (err) {
+        console.error("Error sending file:", err);
+        return res.status(500).send("File download failed.");
+      }
+    });
+  } catch (err) {
+    console.error("Error handling file download:", err);
+    res.status(500).send("File download failed.");
   }
 };
