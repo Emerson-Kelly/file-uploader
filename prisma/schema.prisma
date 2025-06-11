@@ -29,13 +29,14 @@ model Folder {
   name       String
   userId     String
   user       User     @relation(fields: [userId], references: [id])
-  files      File[]
-  parentId   String?
-  parent     Folder?  @relation("FolderToSubfolders", fields: [parentId], references: [id])
+  files      File[]   
+
+  parentId   String?  
+  parent     Folder?  @relation("FolderToSubfolders", fields: [parentId], references: [id], onDelete: Cascade)
   subfolders Folder[] @relation("FolderToSubfolders")
+
   createdAt  DateTime @default(now())
 }
-
 
 model File {
   id        String   @id @default(cuid())
@@ -48,7 +49,7 @@ model File {
   createdAt DateTime @default(now())
 
   user   User    @relation(fields: [userId], references: [id])
-  folder Folder? @relation(fields: [folderId], references: [id])
+  folder Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }
 
 model Session {

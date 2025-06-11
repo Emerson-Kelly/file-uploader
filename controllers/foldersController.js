@@ -1,4 +1,4 @@
-import { insertFolder, editFolderName, getBreadcrumbs } from "../lib/dataService.js";
+import { insertFolder, editFolderName, getBreadcrumbs, removeFolderFromDb } from "../lib/dataService.js";
 
 export const createFolderPost = async (req, res) => {
   try {
@@ -48,11 +48,12 @@ export const editFolderPost = async (req, res) => {
 };
 
 export const folderGet = async (req, res) => {
-  const folderId = parseInt(req.params.id);
+  const folderId = req.params.id;
+
 
   try {
     const { currentFolder, subfolders } = await getFolderDetails(folderId);
-
+    
     console.log(breadcrumbs);
 
     if (!currentFolder) {
@@ -70,3 +71,21 @@ export const folderGet = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+export const deleteFolder = async (req, res) => {
+    
+    const folderId = req.params.id;
+    const parentId = req.body.parentId === "null" ? null : req.body.parentId;
+    console.log(folderId);
+    console.log(parentId);
+    try {
+      await removeFolderFromDb(folderId);
+  
+      const redirectUrl = parentId ? `/folder/${parentId}` : "/";
+      res.redirect(redirectUrl);
+    } catch (err) {
+      console.error("Error deleting folder:", err);
+      res.status(500).send("Folder deletion failed");
+    }
+  };
+  
