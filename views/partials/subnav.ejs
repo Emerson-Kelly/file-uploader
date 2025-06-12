@@ -1,6 +1,6 @@
 <nav class="-mb-0.5 flex justify-end space-x-6 w-full max-w-375 py-4">
     <div class="inline-flex rounded-lg shadow-2xs">
-        <form method="POST" action="/folders">
+        <form method="POST" action="/folder">
             <input type="text" name="name" placeholder="New folder name" required>
             <% if (parentId) { %>
                 <input type="hidden" name="parentId" value="<%= parentId %>" />

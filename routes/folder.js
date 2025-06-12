@@ -3,9 +3,9 @@ import { createFolderPost, deleteFolder, editFolderPost, folderGet } from '../co
 
 const router = express.Router();
 
-router.post('/folders', createFolderPost);
+router.post('/folder', createFolderPost);
 
-router.post('/folders/:id/rename', editFolderPost);
+router.post('/folder/:id/rename', editFolderPost);
 
 router.post("/folder/:id/deleteFolder", deleteFolder);
 

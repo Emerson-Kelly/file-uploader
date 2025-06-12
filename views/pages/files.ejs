@@ -103,16 +103,20 @@
                     >
                       <form
                         method="POST"
-                        action="/folder/<%= folder.id %>rename"
+                        action="/folder/<%= sub.id %>/rename"
                         class="mb-2"
                       >
                         <input
                           type="text"
                           name="name"
-                          value="<%= folder.name %>"
+                          value="<%= sub.name %>"
                           required
                           class="border rounded px-2 py-1"
                         />
+                        <input
+                        type="hidden"
+                        name="parentId"
+                        value="<%= parentId %>"/>
                         <button
                           type="submit"
                           class="mt-1 bg-blue-600 text-white py-1 rounded hover:bg-blue-700"

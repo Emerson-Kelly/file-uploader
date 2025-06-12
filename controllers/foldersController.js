@@ -1,4 +1,4 @@
-import { insertFolder, editFolderName, getBreadcrumbs, removeFolderFromDb } from "../lib/dataService.js";
+import { insertFolder, editFolderName, getBreadcrumbs, removeFolderFromDb, } from "../lib/dataService.js";
 
 export const createFolderPost = async (req, res) => {
   try {
@@ -28,6 +28,7 @@ export const createFolderPost = async (req, res) => {
 export const editFolderPost = async (req, res) => {
   const folderId = req.params.id;
   const newName = req.body.name;
+  const { parentId } = req.body;
 
   if (!folderId) {
     console.error("Missing folder ID in route parameter");
@@ -35,6 +36,7 @@ export const editFolderPost = async (req, res) => {
   }
 
   try {
+
     await editFolderName(folderId, newName);
     if (parentId) {
       res.redirect(`/folder/${parentId}`);
