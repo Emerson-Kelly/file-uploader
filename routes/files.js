@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/folder/:id", filesGet);
 
-router.get("/download/:url", downloadFile);
+router.get("/download/:id", downloadFile);
 
 router.post("/uploads", fileUploadMiddleware, filesPost);
 

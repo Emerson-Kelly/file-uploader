@@ -9,7 +9,7 @@
 
   <body>
     <%- include('../partials/navbar') %>
-
+    <% if (user) { %>
     <div class="-m-1.5 overflow-auto">
       <div class="p-1.5 min-w-full inline-block align-middle">
         <div class="overflow-hidden mt-12">
@@ -214,9 +214,9 @@
                         </button>
                       </form>
                       <a
-                        href="/download/<%= file.url.replace('/uploads/', '') %>"
+                        href="/download/<%= file.id %>"
                         class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
-                      >
+                        download="<%= file.name %>">
                         Download
                       </a>
                     </div>
@@ -242,5 +242,6 @@
         </div>
       </div>
     </div>
+    <% } %>
   </body>
 </html>

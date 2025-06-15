@@ -16,7 +16,7 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
+  id       String    @id @default(uuid())
   email    String    @unique
   password String
   folders  Folder[]
@@ -25,7 +25,7 @@ model User {
 }
 
 model Folder {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid())
   name       String
   userId     String
   user       User     @relation(fields: [userId], references: [id])
@@ -39,12 +39,12 @@ model Folder {
 }
 
 model File {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String
   size      Int
   path      String
   url       String? // cloud storage
-  userId    String
+  userId    String   
   folderId  String?
   createdAt DateTime @default(now())
 
@@ -53,7 +53,7 @@ model File {
 }
 
 model Session {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   sid       String   @unique
   data      String
   expiresAt DateTime

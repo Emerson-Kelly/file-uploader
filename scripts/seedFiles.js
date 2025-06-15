@@ -1,3 +1,4 @@
+/*
 import fs from "fs";
 import path from "path";
 import { faker } from "@faker-js/faker";
@@ -82,3 +83,4 @@ async function seedFakeFiles() {
 }
 
 seedFakeFiles();
+*/

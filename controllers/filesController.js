@@ -5,13 +5,16 @@ import {
   insertFile,
   removeFileFromDb,
   getFileByUrl,
+  getFileById,
 } from "../lib/dataService.js";
 import multer from "multer";
 import path from "node:path";
 import { fileURLToPath } from "url";
+import supabase from "../lib/supabaseClient.js";
 import fs from "node:fs";
+import axios from "axios";
 
-const uploads = multer({ dest: "uploads/" });
+const uploads = multer({ storage: multer.memoryStorage() });
 
 export const filesGet = async (req, res) => {
   const folderId = req.params.id;
@@ -50,33 +53,44 @@ export const filesPost = async (req, res) => {
   const file = req.file;
   const folderId = req.body.parentId === "null" ? null : req.body.parentId;
   const userId = req.user.id;
+  const originalName = file.originalname.replace(/[^\w.\-]/g, "_");
+  const safeName = `${Date.now()}_${originalName}`;
 
-  if (!file) {
-    return res.status(400).send("No file uploaded");
-  }
-
-  console.log("Uploaded file info:", file);
-  console.log("Folder ID:", folderId);
+  if (!file) return res.status(400).send("No file uploaded");
 
   try {
-    const name = file.originalname;
+    const { data, error } = await supabase.storage
+      .from("uploads")
+      .upload(safeName, file.buffer, {
+        contentType: file.mimetype,
+        upsert: true,
+        allowedMimeTypes:
+          ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
+      });
 
-    // Save file metadata to database
+    if (error) throw error;
+
+    const publicUrl = supabase.storage.from("uploads").getPublicUrl(data.path)
+      .data.publicUrl;
+
+    console.log(publicUrl);
+
     await insertFile({
-      name,
-      path: file.path,
-      url: `/uploads/${file.filename}`,
+      name: file.originalname,
+      url: publicUrl,
       size: file.size,
+      path: data.path,
       folderId,
       userId,
     });
 
-    const redirectUrl =
-      folderId && folderId !== "null" ? `/folder/${folderId}` : `/`;
-    return res.json({ success: true, redirect: redirectUrl });
+    return res.json({
+      success: true,
+      redirect: folderId ? `/folder/${folderId}` : `/`,
+    });
   } catch (err) {
-    console.error("Error handling uploaded file:", err);
-    res.status(500).send("Upload failed");
+    console.error("Upload failed:", err);
+    return res.status(500).send("Upload failed");
   }
 };
 
@@ -85,11 +99,24 @@ export const deleteFile = async (req, res) => {
   const parentId = req.body.parentId === "null" ? null : req.body.parentId;
 
   try {
+
+    const file = await getFileById(fileId);
+
+    if (!file) {
+      return res.status(404).send("File not found");
+    }
+
+    const { error } = await supabase.storage
+      .from("uploads")
+      .remove([file.path]);
+
+    if (error) {
+      console.error("Failed to delete file from storage:", error);
+    }
+
     await removeFileFromDb(fileId);
 
-    const redirectUrl =
-      parentId && parentId !== "null" ? `/folder/${parentId}` : `/`;
-
+    const redirectUrl = parentId ? `/folder/${parentId}` : `/`;
     return res.redirect(redirectUrl);
   } catch (err) {
     console.error("Error handling file removal:", err);
@@ -98,32 +125,29 @@ export const deleteFile = async (req, res) => {
 };
 
 export const downloadFile = async (req, res) => {
-  const fileUrl = req.params.url;
-  const filePath = path.join("uploads", fileUrl);
-
+  const fileId = req.params.id;
   try {
-    const file = await getFileByUrl(`/uploads/${fileUrl}`);
+    const file = await getFileById(fileId);
 
-    if (!file) {
-      return res.status(404).send("File not found");
+    if (!file) return res.status(404).send("File not found");
+
+    const { data, error } = await supabase.storage
+      .from("uploads")
+      .createSignedUrl(file.path, 60);
+
+    if (error || !data?.signedUrl) {
+      return res.status(500).send("Failed to get signed URL");
     }
 
-    if (!fs.existsSync(filePath)) {
-      console.error("File does not exist:", filePath);
-      return res.status(404).send("File not found");
-    }
-
-    // Set content type
-    res.setHeader("Content-Type", "application/octet-stream");
-
-    res.download(filePath, file.name, (err) => {
-      if (err) {
-        console.error("Error sending file:", err);
-        return res.status(500).send("File download failed.");
-      }
+    const response = await axios.get(data.signedUrl, {
+      responseType: "stream",
     });
+
+    res.setHeader("Content-Disposition", `attachment; filename="${file.name}"`);
+
+    response.data.pipe(res);
   } catch (err) {
-    console.error("Error handling file download:", err);
-    res.status(500).send("File download failed.");
+    console.error("Download error:", err);
+    res.status(500).send("Download failed");
   }
 };
