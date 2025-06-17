@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link href="/stylesheets/output.css" rel="stylesheet" />
-
     <title>Home</title>
   </head>
 
@@ -13,26 +12,27 @@
     <%- include('../partials/navbar') %> 
     <% if (user) { %>
     <div
-      class="min-h-screen bg-gradient-to-b from-blue-50 via-transparent light:from-blue-50 light:via-transparent"
+      class="min-h-screen bg-gradient-to-b from-orange-20 via-transparent light:from-orange-50 light:via-transparent"
     >
       <main id="main-content">
         <!-- Folder Table Display -->
         <div class="overflow-x-auto pt-13 max-w-[81rem] w-full m-auto">
           <%- include('../partials/subnav', { parentId: parentId }) %>
+          <div class="bg-amber-800/1 border rounded-lg border-amber-800/20 overflow-x-auto ">
           <table
-            class="min-w-full table-auto text-left border border-gray-200 rounded-lg"
+            class="min-w-full table-auto text-left border border-transparent rounded-md overflow-hidden backdrop-blur-xs"
           >
             <thead
-              class="bg-gray-50 text-gray-700 uppercase text-sm border border-gray-200 border-b-2"
+              class="bg-amber-800/5"
             >
               <tr>
-                <th class="px-4 py-3">Name</th>
-                <th class="px-4 py-3">Size</th>
-                <th class="px-4 py-3">Created</th>
-                <th class="px-4 py-3">Options</th>
+                <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Name</th>
+                <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Size</th>
+                <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Created</th>
+                <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Options</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
+            <tbody class="divide-y divide-gray-200 text-md text-gray-800">
               <% allFolders.forEach(folder => { %> <% let folderRowCount = 0; if
               (folder.subfolders && folder.subfolders.length > 0) {
               folder.subfolders.forEach(sub => { folderRowCount += (sub.files &&
@@ -40,20 +40,18 @@
               folderRowCount = 1; } %> <% if (!folder.subfolders ||
               folder.subfolders.length === 0) { %>
               <tr>
-                <td class="px-4 py-3">
-                  <a
-                    href="/folder/<%= folder.id %>"
-                    class="text-blue-600 hover:underline"
-                    ><%= folder.name %></a
-                  >
+                <td class="px-6 py-3">
+                  <a href="/folder/<%= folder.id %>" class="text-amber-900 hover:underline flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-icon lucide-folder"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                    <%= folder.name %></a>
                 </td>
-                <td class="px-4 py-3 text-gray-500 italic">—</td>
-                <td class="px-4 py-3 text-gray-500 italic">
+                <td class="px-6 py-3 text-gray-500 italic">—</td>
+                <td class="px-6 py-3 text-gray-500 italic">
                   <%= new Date(folder.createdAt).toLocaleString('en-US', { hour:
                   'numeric', minute: '2-digit', hour12: true, day: '2-digit',
                   month: '2-digit', year: 'numeric' }) %>
                 </td>
-                <td class="px-4 py-3 text-gray-500 italic">
+                <td class="px-6 py-3 text-gray-500 italic">
                   <div
                     class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
                   >
@@ -128,7 +126,7 @@
               subfolder.files.length === 0) { %>
               <tr>
                 <% if (!firstFolderRowRendered) { %>
-                <td class="px-4 py-3" rowspan="<%= folderRowCount %>">
+                <td class="px-6 py-3" rowspan="<%= folderRowCount %>">
                   <a
                     href="/folder/<%= folder.id %>"
                     class="text-blue-600 hover:underline"
@@ -136,15 +134,15 @@
                   >
                 </td>
                 <% firstFolderRowRendered = true; %> <% } %>
-                <td class="px-4 py-3"><%= subfolder.name %></td>
-                <td class="px-4 py-3 text-gray-500 italic">—</td>
-                <td class="px-4 py-3 text-gray-500 italic">...</td>
+                <td class="px-6 py-3"><%= subfolder.name %></td>
+                <td class="px-6 py-3 text-gray-500 italic">—</td>
+                <td class="px-6 py-3 text-gray-500 italic">...</td>
               </tr>
               <% } else { %> <% subfolder.files.forEach((file, fileIndex) => {
               %>
               <tr>
                 <% if (!firstFolderRowRendered && fileIndex === 0) { %>
-                <td class="px-4 py-3" rowspan="<%= folderRowCount %>">
+                <td class="px-6 py-3" rowspan="<%= folderRowCount %>">
                   <a
                     href="/folder/<%= folder.id %>"
                     class="text-blue-600 hover:underline"
@@ -153,12 +151,12 @@
                 </td>
                 <% firstFolderRowRendered = true; %> <% } %> <% if
                 (!firstSubfolderRowRendered && fileIndex === 0) { %>
-                <td class="px-4 py-3" rowspan="<%= subfolderRowCount %>">
+                <td class="px-6 py-3" rowspan="<%= subfolderRowCount %>">
                   <%= subfolder.name %>
                 </td>
                 <% firstSubfolderRowRendered = true; %> <% } %>
-                <td class="px-4 py-3"><%= file.name %></td>
-                <td class="px-4 py-3 text-gray-500 italic">...</td>
+                <td class="px-6 py-3"><%= file.name %></td>
+                <td class="px-6 py-3 text-gray-500 italic">...</td>
                 <!-- Replace with file.created_at if available -->
               </tr>
               <% }) %> <% } %> <% }) %> <% } %> <% }) %>
@@ -167,19 +165,19 @@
               <% if (topLevelFiles && topLevelFiles.length > 0) { %> <%
               topLevelFiles.forEach(file => { %>
               <tr>
-                <td class="px-4 py-3"><%= file.name %></td>
-                <td class="px-4 py-3 text-gray-500 italic">
+                <td class="px-6 py-3"><%= file.name %></td>
+                <td class="px-6 py-3 text-gray-500 italic">
                   <% if (file.size < 1024 * 1024) { %> <%= (file.size /
                   1024).toFixed(1) %> KB <% } else { %> <%= (file.size / (1024 *
                   1024)).toFixed(1) %> MB <% } %>
                 </td>
                 <!-- Replace with file.size -->
-                <td class="px-4 py-3 text-gray-500 italic">
+                <td class="px-6 py-3 text-gray-500 italic">
                   <%= new Date(file.createdAt).toLocaleString('en-US', { hour:
                   'numeric', minute: '2-digit', hour12: true, day: '2-digit',
                   month: '2-digit', year: 'numeric' }) %>
                 </td>
-                <td class="px-4 py-3 text-gray-500 italic">
+                <td class="px-6 py-3 text-gray-500 italic">
                   <div
                     class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
                   >
@@ -246,6 +244,7 @@
               <% }) %> <% } %>
             </tbody>
           </table>
+        </div>
         </div>
       </main>
     </div>
