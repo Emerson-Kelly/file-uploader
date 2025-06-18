@@ -12,5 +12,10 @@ body {
     #ffffff 0.8500000000000001px
   );
   background-size: 17px 17px;
+  background: url(https://img.freepik.com/premium-photo/soft-coconut-background-with-beige-gradient_901408-3710.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.9);
+  background-blend-mode: lighten;
 }
 

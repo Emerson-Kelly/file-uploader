@@ -1,7 +1,7 @@
 {
   "type": "module",
   "dependencies": {
-    "@floating-ui/dom": "^1.7.0",
+    "@floating-ui/dom": "^1.7.1",
     "@preline/dropdown": "^3.0.1",
     "@preline/layout-splitter": "^3.0.0",
     "@preline/overlay": "^3.0.0",
