@@ -1,5 +1,5 @@
 import express from "express";
-import { loginGet, loginPost } from "../controllers/loginController.js";
+import { loginGet, loginPost, logoutGet } from "../controllers/loginController.js";
 
 const router = express.Router();
 
@@ -9,11 +9,7 @@ router.get("/login", loginGet);
 // Handle login form submission
 router.post("/login", loginPost);
 
-router.get('/logout', (req, res, next) => {
-    req.logout(err => {
-      if (err) return next(err);
-      res.redirect('/');
-    });
-  });
+router.get('/logout', logoutGet);
+
 
 export { router as loginRouter };

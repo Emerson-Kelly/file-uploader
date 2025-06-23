@@ -1,6 +1,14 @@
-import { getTopLevelFolders, getFilesWithoutFolder, getFolderDetails } from "../lib/dataService.js";
+import {
+  getTopLevelFolders,
+  getFilesWithoutFolder,
+  getFolderDetails,
+} from "../lib/dataService.js";
 
 export const indexGet = async (req, res) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
   const userId = req.user.id;
   const folderId = req.params.id;
 
@@ -33,5 +41,3 @@ export const indexGet = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
-  
