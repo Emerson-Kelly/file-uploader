@@ -10,97 +10,79 @@
   <body>
     <%- include('../partials/navbar') %>
     <% if (user) { %>
-    <div class="-m-1.5 overflow-auto">
-      <div class="p-1.5 min-w-full inline-block align-middle">
-        <div class="overflow-hidden mt-12">
+      <div class="min-h-screen bg-gradient-to-b from-orange-20 via-transparent light:from-orange-50 light:via-transparent">
+        <main id="main-content">
+        <div class="overflow-x-auto pt-13 max-w-[81rem] w-full m-auto">
           <%- include('../partials/subnav', { parentId }) %>
 
           <!-- Breadcrumb Navigation -->
           <%- include('../partials/breadcrumbs', { breadcrumbs }) %> <% if
           (folder || folder.files) { %>
-          <h1 class="text-2xl font-bold mb-6">📁 <%= folder.name %></h1>
+          <h1 class="text-2xl font-bold text-amber-800 mb-6 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-icon lucide-folder"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            <%= title %></h1>
 
-          <table class="min-w-full divide-y divide-gray-200 border">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
-                >
-                  Name
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
-                >
-                  Size
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
-                >
-                  Created
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
-                >
-                  Options
-                </th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <div class="bg-amber-800/1 border rounded-lg border-amber-800/20 overflow-x-auto min-h-[70vh]">  
+              <table class="min-w-full table-auto text-left border border-transparent rounded-md backdrop-blur-xs">
+                <thead class="bg-amber-800/5">
+                  <tr>
+                    <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Name</th>
+                    <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Size</th>
+                    <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Created</th>
+                    <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Options</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 text-md text-gray-800">
               <!-- Subfolders -->
               <% if (folder && folder.length> 0) { %> <% folder.forEach(sub=> {
               %>
               <tr>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <a
-                    href="/folder/<%= sub.id %>"
-                    class="text-blue-600 hover:underline"
-                  >
-                    📁 <%= sub.name %>
-                  </a>
+                <td class="px-6 py-3">
+                  <a href="/folder/<%= sub.id %>" class="text-amber-700 hover:underline flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-icon lucide-folder"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                    <%= sub.name %></a>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <td class="px-6 py-3 text-amber-950 italic">
                   —
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <td class="px-6 py-3 text-amber-950 italic">
                   <%= new Date(sub.createdAt).toLocaleString('en-US', { hour:
                   'numeric', minute: '2-digit', hour12: true, day: '2-digit',
                   month: '2-digit', year: 'numeric' }) %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  <div
-                    class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
-                  >
+                <td class="px-6 py-3 text-amber-950 italic">
+                  <div class="options-dropdown-content hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex">
                     <button
-                      id="hs-dropdown-example"
-                      type="button"
-                      class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                      aria-haspopup="menu"
-                      aria-expanded="false"
-                      aria-label="Dropdown"
+                    id="hs-dropdown-example"
+                    type="button"
+                    class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-amber-950 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                    aria-haspopup="menu"
+                    aria-expanded="false"
+                    aria-label="Dropdown">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-ellipsis-icon lucide-ellipsis size-4"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-ellipsis-icon lucide-ellipsis size-4"
-                      >
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="19" cy="12" r="1" />
-                        <circle cx="5" cy="12" r="1" />
-                      </svg>
-                    </button>
-                    <div
-                      class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-60 bg-white shadow-md rounded-lg p-2 contents"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="hs-dropdown-example"
-                    >
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="19" cy="12" r="1" />
+                      <circle cx="5" cy="12" r="1" />
+                    </svg>
+                  </button>
+                  <div
+                  class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-60 bg-white shadow-md rounded-lg p-2 contents"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="hs-dropdown-example"
+                  data-hs-dropdown-auto-close="inside">
+                  <div class="flex-col absolute z-12 w-50 p-2 bg-white p-4 -translate-x-full rounded-lg">
                       <form
                         method="POST"
                         action="/folder/<%= sub.id %>/rename"
@@ -111,7 +93,7 @@
                           name="name"
                           value="<%= sub.name %>"
                           required
-                          class="border rounded px-2 py-1"
+                          class="border rounded px-2 py-1 w-full"
                         />
                         <input
                         type="hidden"
@@ -119,7 +101,7 @@
                         value="<%= parentId %>"/>
                         <button
                           type="submit"
-                          class="mt-1 bg-blue-600 text-white py-1 rounded hover:bg-blue-700"
+                          class="mt-3 w-full bg-amber-800 text-white py-1 rounded hover:bg-amber-700 cursor-pointer"
                         >
                           Rename
                         </button>
@@ -130,15 +112,15 @@
                             name="parentId"
                             value="<%= currentFolder.id %>"
                             required
-                            class="border rounded px-2 py-1 w-full"
                           />
                           <button
                             type="submit"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                            class="mt-1 w-full py-1 rounded-lg text-sm border border-gray-200 bg-white-500 text-red-600 text-center hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 cursor-pointer"
                           >
                             Delete <%= sub.name %>
                           </button>
-                        </form>                                                         
+                        </form>
+                      </div>                                                
                     </div>
                   </div>
                 </td>
@@ -148,25 +130,25 @@
               <!-- Files -->
               <% if (files && files.length> 0) { %> <% files.forEach(file=> { %>
               <tr>
-                <td class="px-6 py-4 whitespace-nowrap">📄 <%= file.name %></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <td class="px-6 py-6 flex items-center gap-2 text-amber-950"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-icon lucide-file"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg><%= file.name %></td>
+                <td class="px-6 py-3 text-amber-950 italic">
                   <% if (file.size < 1024 * 1024) { %> <%= (file.size /
                   1024).toFixed(1) %> KB <% } else { %> <%= (file.size / (1024 *
                   1024)).toFixed(1) %> MB <% } %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <td class="px-6 py-3 text-amber-950 italic">
                   <%= new Date(file.createdAt).toLocaleString('en-US', { hour:
                   'numeric', minute: '2-digit', hour12: true, day: '2-digit',
                   month: '2-digit', year: 'numeric' }) %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                <td class="px-6 py-3 text-amber-950 italic">
                   <div
-                    class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
+                    class="options-dropdown-content hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
                   >
                     <button
                       id="hs-dropdown-example"
                       type="button"
-                      class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                      class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-amber-950 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
                       aria-haspopup="menu"
                       aria-expanded="false"
                       aria-label="Dropdown"
@@ -194,6 +176,7 @@
                       aria-orientation="vertical"
                       aria-labelledby="hs-dropdown-example"
                     >
+                    <div class="flex-col absolute z-12 w-50 p-2 bg-white p-4 -translate-x-full rounded-lg">
                       <form
                         method="POST"
                         action="/folder/<%= file.id %>/delete"
@@ -208,17 +191,18 @@
                         />
                         <button
                           type="submit"
-                          class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                          class="w-full py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 cursor-pointer border border-gray-200 shadow-2xs"
                         >
                           Delete
                         </button>
                       </form>
                       <a
                         href="/download/<%= file.id %>"
-                        class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100"
+                        class="w-full block py-2 px-3 text-center rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 border border-gray-200 shadow-2xs"
                         download="<%= file.name %>">
                         Download
                       </a>
+                    </div>
                     </div>
                   </div>
                 </td>
@@ -226,13 +210,14 @@
               <% }) %> <% } %>
             </tbody>
           </table>
+          </div>
 
           <% } else if (folder) { %>
           <h1 class="text-2xl font-bold mb-4">📁 All Folders</h1>
           <!-- fallback view if not inside a folder -->
           <% folder.forEach(f=> { %>
           <p>
-            <a href="/folders/<%= f.id %>" class="text-blue-600 hover:underline"
+            <a href="/folder/<%= f.id %>" class="text-blue-600 hover:underline"
               >📁 <%= f.name %></a
             >
           </p>
@@ -240,8 +225,10 @@
           <p class="text-gray-500">No data to display.</p>
           <% } %>
         </div>
-      </div>
+
+    </main>
     </div>
     <% } %>
+    <script src="/js/options.js"></script>
   </body>
 </html>
