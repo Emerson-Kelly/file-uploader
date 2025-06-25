@@ -11,20 +11,14 @@
   <body>
     <%- include('../partials/navbar') %> 
     <% if (user) { %>
-    <div
-      class="min-h-screen bg-gradient-to-b from-orange-20 via-transparent light:from-orange-50 light:via-transparent"
-    >
+    <div class="min-h-screen bg-gradient-to-b from-orange-20 via-transparent light:from-orange-50 light:via-transparent">
       <main id="main-content">
         <!-- Folder Table Display -->
         <div class="overflow-x-auto pt-13 max-w-[81rem] w-full m-auto">
           <%- include('../partials/subnav', { parentId: parentId }) %>
           <div class="bg-amber-800/1 border rounded-lg border-amber-800/20 overflow-x-auto min-h-[80vh]">
-          <table
-            class="min-w-full table-auto text-left border border-transparent rounded-md backdrop-blur-xs"
-          >
-            <thead
-              class="bg-amber-800/5"
-            >
+          <table class="min-w-full table-auto text-left border border-transparent rounded-md backdrop-blur-xs">
+            <thead class="bg-amber-800/5">
               <tr>
                 <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Name</th>
                 <th class="px-6 py-3 text-start text-sm font-medium text-amber-900 uppercase light:text-neutral-500">Size</th>
@@ -52,17 +46,14 @@
                   month: '2-digit', year: 'numeric' }) %>
                 </td>
                 <td class="px-6 py-3 text-amber-950 italic">
-                  <div
-                    class="options-dropdown-content hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
-                  >
+                  <div class="options-dropdown-content hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex">
                     <button
                       id="hs-dropdown-example"
                       type="button"
                       class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-amber-950 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
                       aria-haspopup="menu"
                       aria-expanded="false"
-                      aria-label="Dropdown"
-                    >
+                      aria-label="Dropdown">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -85,8 +76,7 @@
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="hs-dropdown-example"
-                    data-hs-dropdown-auto-close="inside"
-                  >
+                    data-hs-dropdown-auto-close="inside">
                     <div class="flex-col absolute z-12 w-50 p-2 bg-white p-4 -translate-x-full rounded-lg">
                       <form
                         method="POST"
@@ -264,23 +254,38 @@
       Dropzone.autoDiscover = false;
 
       const myDropzone = new Dropzone("#my-dropzone", {
-        paramName: "uploadedFile",
-        maxFilesize: 50, // MB
-        acceptedFiles:
-          ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
-        init: function () {
-          this.on("success", function (file, response) {
-            if (response.redirect) {
-              window.location.href = response.redirect;
-            }
-          });
-
-          this.on("error", function (file, errorMessage) {
-            console.error("Upload error:", errorMessage);
-            alert("Upload failed.");
-          });
-        },
+    paramName: "uploadedFile",
+    maxFilesize: 50, // MB
+    acceptedFiles:
+      ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
+    dictDefaultMessage: `<div class="flex items-center text-amber-950"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2 lucide lucide-folder-plus-icon lucide-folder-plus"> <path d="M12 10v6" /> <path d="M9 13h6" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>
+        Drop files here or <span class="mx-1 text-amber-700 cursor-pointer">click</span> to browse</div>`,
+    previewTemplate: `
+    <div class="dz-preview dz-file-preview p-4 rounded-md border border-gray-200 shadow-sm">
+      <div class="dz-details flex justify-between items-center">
+        <div>
+          <div class="dz-filename"><span data-dz-name></span></div>
+          <div class="dz-size text-xs text-gray-600" data-dz-size></div>
+        </div>
+        <div class="dz-progress w-24 h-1 bg-gray-200 rounded mt-2">
+          <span class="dz-upload bg-blue-500 block h-full rounded" data-dz-uploadprogress></span>
+        </div>
+      </div>
+    </div>
+  `,
+    init: function () {
+      this.on("success", function (file, response) {
+        if (response.redirect) {
+          window.location.href = response.redirect;
+        }
       });
+
+      this.on("error", function (file, errorMessage) {
+        console.error("Upload error:", errorMessage);
+        alert("Upload failed: " + errorMessage);
+      });
+    },
+  });
     </script>
   </body>
 </html>

@@ -84,24 +84,6 @@
                   
                     <input type="hidden" name="parentId" value="<%= parentId || 'null' %>" />
                   
-                    <div class="flex-1 flex flex-col justify-center items-center gap-4 px-4 pb-6 text-center border-t border-dashed border-gray-300">
-                      <span class="inline-flex justify-center items-center size-16 bg-gray-100 text-gray-800 rounded-full">
-                        <svg class="shrink-0 size-6" xmlns="http://www.w3.org/2000/svg" width="24"
-                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                          <polyline points="17 8 12 3 7 8"></polyline>
-                          <line x1="12" x2="12" y1="3" y2="15"></line>
-                        </svg>
-                      </span>
-                      <div class="text-sm text-gray-600">
-                        <p>
-                          <span class="font-medium text-gray-800">Drop your file here</span>
-                          or <span class="text-amber-600 font-semibold hover:underline cursor-pointer">browse</span>
-                        </p>
-                        <p class="text-xs text-gray-400 mt-1">Max size: 2MB</p>
-                      </div>
-                    </div>
                   </form>
                   
                 </div>
@@ -118,18 +100,39 @@
         paramName: "uploadedFile",
         maxFilesize: 50, // MB
         acceptedFiles: ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
-        init: function () {
-            this.on("success", function (file, response) {
-                if (response.redirect) {
-                    window.location.href = response.redirect;
-                }
-            });
+        dictDefaultMessage: `<div class="flex items-center text-amber-950"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2 lucide lucide-folder-plus-icon lucide-folder-plus"> <path d="M12 10v6" /> <path d="M9 13h6" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>
+        Drop files here or <span class="mx-1 text-amber-700 cursor-pointer">click</span> to browse</div>`,
+        previewTemplate: `
+    <div class="dz-preview dz-file-preview p-4 rounded-md border border-gray-200 shadow-sm">
+      <div class="dz-details flex justify-between items-center">
+        <div>
+          <div class="dz-filename"><span data-dz-name></span></div>
+          <div class="dz-size text-xs text-gray-600" data-dz-size></div>
+        </div>
+        <div class="dz-progress w-24 h-1 bg-gray-200 rounded mt-2">
+          <span class="dz-upload bg-blue-500 block h-full rounded" data-dz-uploadprogress></span>
+        </div>
+      </div>
+      <div style="display: none;" class="dz-success-mark text-green-600 mt-2" data-dz-success>
+        ✅ Upload successful
+      </div>
+      <div style="display: none;" class="dz-error-mark text-red-600 mt-2" data-dz-errormessage>
+        ❌ Upload failed
+      </div>
+    </div>
+  `,
+  init: function () {
+          this.on("success", function (file, response) {
+            if (response.redirect) {
+              window.location.href = response.redirect;
+            }
+          });
 
-            this.on("error", function (file, errorMessage) {
-                console.error("Upload error:", errorMessage);
-                alert("Upload failed.");
-            });
+          this.on("error", function (file, errorMessage) {
+            console.error("Upload error:", errorMessage);
+            alert("Upload failed: " + errorMessage);
+          });
         },
-    });
+      });
 </script>
 <script src="/js/subnav.js"></script>
