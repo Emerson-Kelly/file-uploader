@@ -50,29 +50,28 @@ export const editFolderPost = async (req, res) => {
 };
 
 export const folderGet = async (req, res) => {
-  const folderId = req.params.id;
-
-
-  try {
-    const { currentFolder, subfolders } = await getFolderDetails(folderId);
-    
-    console.log(breadcrumbs);
-
-    if (!currentFolder) {
-      return res.status(404).send("Folder not found");
+    const folderId = req.params.id;
+    const userId = req.user.id;
+  
+    try {
+      const { currentFolder, subfolders } = await getFolderDetails(folderId, userId);
+  
+      if (!currentFolder) {
+        return res.status(404).send("Folder not found");
+      }
+  
+      res.render("pages/folder", {
+        title: currentFolder.name,
+        currentFolder,
+        subfolders,
+        parentId: currentFolder.id,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
     }
-
-    res.render("pages/folder", {
-      title: currentFolder.name,
-      currentFolder,
-      subfolders,
-      parentId: currentFolder.id,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-};
+  };
+   
 
 export const deleteFolder = async (req, res) => {
     

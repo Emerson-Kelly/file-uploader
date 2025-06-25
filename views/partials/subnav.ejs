@@ -1,108 +1,168 @@
+<% if (user) { %>
 <nav class="-mb-0.5 flex justify-end space-x-6 w-full max-w-375 py-4">
-    <div class="flex gap-4">
-        <div class="inline-flex rounded-lg shadow-2xs">
-            <!-- Folder Creation Controls -->
-            <div class="relative inline-flex rounded-lg shadow-2xs">
-                <!-- Toggle Button -->
-                <button type="button" id="toggle-folder-input"
-                    class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium focus:z-10 border border-gray-200 bg-white-500 text-amber-950 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 cursor-pointer light:white light:border-neutral-700 light:text-white light:hover:bg-neutral-800 light:focus:bg-neutral-800 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-folder-plus-icon lucide-folder-plus size-4">
-                        <path d="M12 10v6" />
-                        <path d="M9 13h6" />
-                        <path
-                            d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
-                    </svg>
-                    New Folder
-                </button>
+  <div class="flex gap-4">
+    <div class="inline-flex rounded-lg shadow-2xs">
+      <!-- Folder Creation Controls -->
+      <div class="relative inline-flex rounded-lg shadow-2xs">
+        <!-- Toggle Button -->
+        <button
+          type="button"
+          id="toggle-folder-input"
+          class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium focus:z-10 border border-gray-200 bg-white-500 text-amber-950 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 cursor-pointer light:white light:border-neutral-700 light:text-white light:hover:bg-neutral-800 light:focus:bg-neutral-800 rounded-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-folder-plus-icon lucide-folder-plus size-4"
+          >
+            <path d="M12 10v6" />
+            <path d="M9 13h6" />
+            <path
+              d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"
+            />
+          </svg>
+          New Folder
+        </button>
 
-                <!-- Hidden Input Form -->
-                <form id="new-folder-form" method="POST" action="/folder"
-                    class="absolute top-full left-0 z-10 mt-2 hidden bg-white light:bg-neutral-900 p-4 rounded-lg shadow-md border border-gray-200 light:border-neutral-700 space-y-2 w-64">
-                    <input type="text" name="name" placeholder="New folder name" required
-                        class="w-full px-3 py-2 border border-gray-300 light:border-neutral-700 rounded-md text-sm light:bg-neutral-800 dark:text-black">
-                    <% if (parentId) { %>
-                        <input type="hidden" name="parentId" value="<%= parentId %>" />
-                        <% } else { %>
-                            <input type="hidden" name="parentId" value="null" />
-                            <% } %>
-                                <button type="submit"
-                                    class="w-full py-2 px-4 bg-amber-800 text-white text-sm font-medium rounded-md hover:bg-amber-700 focus:outline-none cursor-pointer">
-                                    Create Folder
-                                </button>
-                </form>
-            </div>
-        </div>
-
-        <div class="relative inline-flex rounded-lg shadow-2xs">
-            <button type="submit"
-                class="py-3 px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-amber-800/80 text-white shadow-2xs hover:bg-amber-800/50 focus:outline-hidden focus:bg-gray-50 cursor-pointer light:bg-neutral-900 light:border-neutral-700 light:text-white light:hover:bg-amber-800/50 light:focus:bg-neutral-800"
-            aria-haspopup=" dialog" aria-expanded="false" aria-controls="hs-basic-modal"
-                data-hs-overlay="#hs-basic-modal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-upload-icon lucide-upload size-4">
-                    <path d="M12 3v12" />
-                    <path d="m17 8-5-5-5 5" />
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                </svg>
-                New File
-            </button>
-        </div>
-
-
-        <div id="hs-basic-modal"
-            class="hs-overlay hidden size-full fixed top-0 start-0 z-60 overflow-x-hidden overflow-y-auto pointer-events-none"
-            role="dialog" tabindex="-1" aria-labelledby="hs-basic-modal-label">
-            <div
-                class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto contents">
-                <div
-                    class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl pointer-events-auto  dark:border-neutral-700 dark:shadow-neutral-700/70">
-            
-                    <form
-                    action="/uploads"
-                    method="POST"
-                    enctype="multipart/form-data"
-                    class="dropzone flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl pointer-events-auto dark:border-neutral-700 dark:shadow-neutral-700/70"
-                    id="my-dropzone"
-                  >
-                    <div class="flex justify-between items-center py-3 px-4">
-                      <h3 id="hs-basic-modal-label" class="font-bold text-gray-800">Upload File</h3>
-                      <button type="button"
-                        class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 cursor-pointer dark:text-dark dark:hover:white dark:focus:bg-neutral-700"
-                        aria-label="Close" data-hs-overlay="#hs-basic-modal">
-                        <span class="sr-only">Close</span>
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                          stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M18 6 6 18"></path>
-                          <path d="m6 6 12 12"></path>
-                        </svg>
-                      </button>
-                    </div>
-                  
-                    <input type="hidden" name="parentId" value="<%= parentId || 'null' %>" />
-                  
-                  </form>
-                  
-                </div>
-            </div>
-        </div>
+        <!-- Hidden Input Form -->
+        <form
+          id="new-folder-form"
+          method="POST"
+          action="/folder"
+          class="absolute top-full left-0 z-10 mt-2 hidden bg-white light:bg-neutral-900 p-4 rounded-lg shadow-md border border-gray-200 light:border-neutral-700 space-y-2 w-64"
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="New folder name"
+            required
+            class="w-full px-3 py-2 border border-gray-300 light:border-neutral-700 rounded-md text-sm light:bg-neutral-800 dark:text-black"
+          />
+          <% if (parentId) { %>
+          <input type="hidden" name="parentId" value="<%= parentId %>" />
+          <% } else { %>
+          <input type="hidden" name="parentId" value="null" />
+          <% } %>
+          <button
+            type="submit"
+            class="w-full py-2 px-4 bg-amber-800 text-white text-sm font-medium rounded-md hover:bg-amber-700 focus:outline-none cursor-pointer"
+          >
+            Create Folder
+          </button>
+        </form>
+      </div>
     </div>
+
+    <div class="relative inline-flex rounded-lg shadow-2xs">
+      <button
+        type="submit"
+        class="py-3 px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-amber-800/80 text-white shadow-2xs hover:bg-amber-800/50 focus:outline-hidden focus:bg-gray-50 cursor-pointer light:bg-neutral-900 light:border-neutral-700 light:text-white light:hover:bg-amber-800/50 light:focus:bg-neutral-800"
+        aria-haspopup=" dialog"
+        aria-expanded="false"
+        aria-controls="hs-basic-modal"
+        data-hs-overlay="#hs-basic-modal"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-upload-icon lucide-upload size-4"
+        >
+          <path d="M12 3v12" />
+          <path d="m17 8-5-5-5 5" />
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        </svg>
+        New File
+      </button>
+    </div>
+
+    <div
+      id="hs-basic-modal"
+      class="hs-overlay hidden size-full fixed top-0 start-0 z-60 overflow-x-hidden overflow-y-auto pointer-events-none"
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="hs-basic-modal-label"
+    >
+      <div
+        class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto contents"
+      >
+        <div
+          class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl pointer-events-auto dark:border-neutral-700 dark:shadow-neutral-700/70"
+        >
+          <form
+            action="/uploads"
+            method="POST"
+            enctype="multipart/form-data"
+            class="dropzone flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl pointer-events-auto dark:border-neutral-700 dark:shadow-neutral-700/70"
+            id="my-dropzone"
+          >
+            <div class="flex justify-between items-center py-3 px-4">
+              <h3 id="hs-basic-modal-label" class="font-bold text-gray-800">
+                Upload File
+              </h3>
+              <button
+                type="button"
+                class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 cursor-pointer dark:text-dark dark:hover:white dark:focus:bg-neutral-700"
+                aria-label="Close"
+                data-hs-overlay="#hs-basic-modal"
+              >
+                <span class="sr-only">Close</span>
+                <svg
+                  class="shrink-0 size-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 6 6 18"></path>
+                  <path d="m6 6 12 12"></path>
+                </svg>
+              </button>
+            </div>
+
+            <input
+              type="hidden"
+              name="parentId"
+              value="<%= parentId || 'null' %>"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>
+<% } %>
 <script src="/assets/vendor/preline/dist/preline.js"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script>
-    Dropzone.autoDiscover = false;
+  Dropzone.autoDiscover = false;
 
-    const myDropzone = new Dropzone("#my-dropzone", {
-        paramName: "uploadedFile",
-        maxFilesize: 50, // MB
-        acceptedFiles: ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
-        dictDefaultMessage: `<div class="flex items-center text-amber-950"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2 lucide lucide-folder-plus-icon lucide-folder-plus"> <path d="M12 10v6" /> <path d="M9 13h6" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>
+  const myDropzone = new Dropzone("#my-dropzone", {
+    paramName: "uploadedFile",
+    maxFilesize: 50, // MB
+    acceptedFiles:
+      ".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.doc,.docx,.txt,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.mp4,.mov,.avi,.webm",
+    dictDefaultMessage: `<div class="flex items-center text-amber-950"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2 lucide lucide-folder-plus-icon lucide-folder-plus"> <path d="M12 10v6" /> <path d="M9 13h6" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>
         Drop files here or <span class="mx-1 text-amber-700 cursor-pointer">click</span> to browse</div>`,
-        previewTemplate: `
+    previewTemplate: `
     <div class="dz-preview dz-file-preview p-4 rounded-md border border-gray-200 shadow-sm">
       <div class="dz-details flex justify-between items-center">
         <div>
@@ -113,26 +173,20 @@
           <span class="dz-upload bg-blue-500 block h-full rounded" data-dz-uploadprogress></span>
         </div>
       </div>
-      <div style="display: none;" class="dz-success-mark text-green-600 mt-2" data-dz-success>
-        ✅ Upload successful
-      </div>
-      <div style="display: none;" class="dz-error-mark text-red-600 mt-2" data-dz-errormessage>
-        ❌ Upload failed
-      </div>
     </div>
   `,
-  init: function () {
-          this.on("success", function (file, response) {
-            if (response.redirect) {
-              window.location.href = response.redirect;
-            }
-          });
-
-          this.on("error", function (file, errorMessage) {
-            console.error("Upload error:", errorMessage);
-            alert("Upload failed: " + errorMessage);
-          });
-        },
+    init: function () {
+      this.on("success", function (file, response) {
+        if (response.redirect) {
+          window.location.href = response.redirect;
+        }
       });
+
+      this.on("error", function (file, errorMessage) {
+        console.error("Upload error:", errorMessage);
+        alert("Upload failed: " + errorMessage);
+      });
+    },
+  });
 </script>
 <script src="/js/subnav.js"></script>
