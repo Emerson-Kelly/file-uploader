@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error</title>
+    <link href="/stylesheets/output.css" rel="stylesheet" />
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <div
+            class="min-h-screen bg-gradient-to-b from-orange-20 via-transparent light:from-orange-50 light:via-transparent flex items-center justify-center">
+            <div class="overflow-x-auto max-w-[81rem] w-full flex flex-col items-center justify-center gap-8">
+                <h1 class="text-8xl font-bold text-amber-800/30 text-center">404 Error</h1>
+                <a href="/"><button type="submit"
+                    class="w-40 py-2 px-4 bg-amber-800 text-white text-sm font-medium rounded-md hover:bg-amber-700 focus:outline-none cursor-pointer">
+                    Return Home
+                </button></a>
+            </div>
+        </div>
+        <script src="/assets/vendor/preline/dist/preline.js"></script>
+</body>
+
+</html>
