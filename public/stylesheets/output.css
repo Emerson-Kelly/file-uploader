@@ -731,6 +731,15 @@
   .border-t-transparent {
     border-top-color: transparent;
   }
+  .bg-amber-700 {
+    background-color: var(--color-amber-700);
+  }
+  .bg-amber-700\/80 {
+    background-color: color-mix(in srgb, oklch(55.5% 0.163 48.998) 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-amber-700) 80%, transparent);
+    }
+  }
   .bg-amber-800 {
     background-color: var(--color-amber-800);
   }
@@ -782,10 +791,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       --tw-gradient-from: color-mix(in oklab, var(--color-amber-900) 12%, transparent);
     }
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-blue-200 {
-    --tw-gradient-from: var(--color-blue-200);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .via-transparent {
@@ -1193,6 +1198,13 @@
       padding-bottom: calc(var(--spacing) * 2);
     }
   }
+  .hover\:bg-amber-600 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-amber-600);
+      }
+    }
+  }
   .hover\:bg-amber-700 {
     &:hover {
       @media (hover: hover) {
@@ -1228,6 +1240,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-100);
+      }
+    }
+  }
+  .hover\:bg-gray-600 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-600);
       }
     }
   }
@@ -1276,14 +1295,14 @@
       border-color: var(--color-blue-500);
     }
   }
+  .focus\:bg-amber-600 {
+    &:focus {
+      background-color: var(--color-amber-600);
+    }
+  }
   .focus\:bg-amber-700 {
     &:focus {
       background-color: var(--color-amber-700);
-    }
-  }
-  .focus\:bg-blue-700 {
-    &:focus {
-      background-color: var(--color-blue-700);
     }
   }
   .focus\:bg-gray-50 {
