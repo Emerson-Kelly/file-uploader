@@ -27,12 +27,6 @@ export const filesGet = async (req, res) => {
       return res.status(404).send("Folder not found");
     }
 
-    /*
-    // Ensure folder id and subfolder id match
-    console.log(currentFolder.id);
-    console.log(subfolders);
-    */
-
     res.render("pages/files", {
       title: currentFolder.name,
       currentFolder,
@@ -99,7 +93,6 @@ export const deleteFile = async (req, res) => {
   const parentId = req.body.parentId === "null" ? null : req.body.parentId;
 
   try {
-
     const file = await getFileById(fileId);
 
     if (!file) {

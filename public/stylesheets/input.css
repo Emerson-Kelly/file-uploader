@@ -1,30 +1,28 @@
 @import "tailwindcss";
 
 * {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 body {
-  background-color: #ffffff;
-  opacity: 1;
-  background-image: radial-gradient(
-    #f7e1bc 0.8500000000000001px,
-    #ffffff 0.8500000000000001px
-  );
-  background-size: 17px 17px;
-  background: url(https://img.freepik.com/premium-photo/soft-coconut-background-with-beige-gradient_901408-3710.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: rgba(255, 255, 255, 0.9);
-  background-blend-mode: lighten;
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: radial-gradient(#f7e1bc 0.8500000000000001px,
+            #ffffff 0.8500000000000001px);
+    background-size: 17px 17px;
+    background: url(https://img.freepik.com/premium-photo/soft-coconut-background-with-beige-gradient_901408-3710.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.9);
+    background-blend-mode: lighten;
 }
 
 .dz-default,
 .dz-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6rem 0;
-  box-shadow: inset -3px 2px 0rem 0rem #0000000f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 0;
+    box-shadow: inset -3px 2px 0rem 0rem #0000000f;
 }

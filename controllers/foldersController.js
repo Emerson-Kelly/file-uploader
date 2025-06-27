@@ -1,4 +1,9 @@
-import { insertFolder, editFolderName, getBreadcrumbs, removeFolderFromDb, } from "../lib/dataService.js";
+import {
+  insertFolder,
+  editFolderName,
+  getBreadcrumbs,
+  removeFolderFromDb,
+} from "../lib/dataService.js";
 
 export const createFolderPost = async (req, res) => {
   try {
@@ -14,7 +19,7 @@ export const createFolderPost = async (req, res) => {
 
     await insertFolder({ name, userId, parentId: cleanParentId });
 
-    if (parentId && parentId !== 'null') {
+    if (parentId && parentId !== "null") {
       res.redirect(`/folder/${parentId}`);
     } else {
       res.redirect("/");
@@ -36,7 +41,6 @@ export const editFolderPost = async (req, res) => {
   }
 
   try {
-
     await editFolderName(folderId, newName);
     if (parentId) {
       res.redirect(`/folder/${parentId}`);
@@ -50,43 +54,43 @@ export const editFolderPost = async (req, res) => {
 };
 
 export const folderGet = async (req, res) => {
-    const folderId = req.params.id;
-    const userId = req.user.id;
-  
-    try {
-      const { currentFolder, subfolders } = await getFolderDetails(folderId, userId);
-  
-      if (!currentFolder) {
-        return res.status(404).send("Folder not found");
-      }
-  
-      res.render("pages/folder", {
-        title: currentFolder.name,
-        currentFolder,
-        subfolders,
-        parentId: currentFolder.id,
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
+  const folderId = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    const { currentFolder, subfolders } = await getFolderDetails(
+      folderId,
+      userId
+    );
+
+    if (!currentFolder) {
+      return res.status(404).send("Folder not found");
     }
-  };
-   
+
+    res.render("pages/folder", {
+      title: currentFolder.name,
+      currentFolder,
+      subfolders,
+      parentId: currentFolder.id,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
 export const deleteFolder = async (req, res) => {
-    
-    const folderId = req.params.id;
-    const parentId = req.body.parentId === "null" ? null : req.body.parentId;
-    console.log(folderId);
-    console.log(parentId);
-    try {
-      await removeFolderFromDb(folderId);
-  
-      const redirectUrl = parentId ? `/folder/${parentId}` : "/";
-      res.redirect(redirectUrl);
-    } catch (err) {
-      console.error("Error deleting folder:", err);
-      res.status(500).send("Folder deletion failed");
-    }
-  };
-  
+  const folderId = req.params.id;
+  const parentId = req.body.parentId === "null" ? null : req.body.parentId;
+  console.log(folderId);
+  console.log(parentId);
+  try {
+    await removeFolderFromDb(folderId);
+
+    const redirectUrl = parentId ? `/folder/${parentId}` : "/";
+    res.redirect(redirectUrl);
+  } catch (err) {
+    console.error("Error deleting folder:", err);
+    res.status(500).send("Folder deletion failed");
+  }
+};

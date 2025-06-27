@@ -3,7 +3,11 @@ import passport from "passport";
 
 // Validation middleware for login form
 export const validateLogin = [
-  body("email").trim().isEmail().withMessage("Enter a valid email").normalizeEmail(),
+  body("email")
+    .trim()
+    .isEmail()
+    .withMessage("Enter a valid email")
+    .normalizeEmail(),
   body("password").trim().notEmpty().withMessage("Password cannot be blank"),
 ];
 

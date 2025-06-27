@@ -3,13 +3,12 @@
 
 /* Adds pointer cursor to buttons */
 @layer base {
+
     button:not(:disabled),
     [role="button"]:not(:disabled) {
-      cursor: pointer;
+        cursor: pointer;
     }
-  }
-  
-  /* Defaults hover styles on all devices */
-  @custom-variant hover (&:hover);
+}
 
-  
+/* Defaults hover styles on all devices */
+@custom-variant hover (&:hover);
