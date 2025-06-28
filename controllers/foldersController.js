@@ -10,12 +10,7 @@ export const createFolderPost = async (req, res) => {
     const { name, parentId } = req.body;
     const userId = req.user.id;
 
-    console.log("Raw form data:", req.body);
-    console.log("Parsed parentId:", parentId);
-
     const cleanParentId = parentId && parentId !== "" ? parentId : null;
-
-    console.log("✅ Cleaned parentId:", cleanParentId);
 
     await insertFolder({ name, userId, parentId: cleanParentId });
 
@@ -82,8 +77,7 @@ export const folderGet = async (req, res) => {
 export const deleteFolder = async (req, res) => {
   const folderId = req.params.id;
   const parentId = req.body.parentId === "null" ? null : req.body.parentId;
-  console.log(folderId);
-  console.log(parentId);
+
   try {
     await removeFolderFromDb(folderId);
 

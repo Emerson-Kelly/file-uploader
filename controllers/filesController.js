@@ -67,8 +67,6 @@ export const filesPost = async (req, res) => {
     const publicUrl = supabase.storage.from("uploads").getPublicUrl(data.path)
       .data.publicUrl;
 
-    console.log(publicUrl);
-
     await insertFile({
       name: file.originalname,
       url: publicUrl,

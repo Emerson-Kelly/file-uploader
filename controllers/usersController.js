@@ -63,7 +63,6 @@ export const signup_post = [
     }
 
     const { email, password } = req.body;
-    console.log("Signup POST body:", req.body);
 
     try {
       // Validate fields
